@@ -1,0 +1,727 @@
+{
+  "dataset_id": "DS001",
+  "sha256": "25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32",
+  "sources": {
+    "Microsoft-Windows-Sysmon": {
+      "records": 892,
+      "event_ids": {
+        "10": 184,
+        "12": 401,
+        "13": 48,
+        "7": 238,
+        "1": 3,
+        "9": 6,
+        "5": 1,
+        "18": 1,
+        "11": 5,
+        "2": 1,
+        "23": 3,
+        "17": 1
+      },
+      "fields": {
+        "@timestamp": {
+          "populated": 892,
+          "types": [
+            "str"
+          ]
+        },
+        "Archived": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "CallTrace": {
+          "populated": 184,
+          "types": [
+            "str"
+          ]
+        },
+        "Channel": {
+          "populated": 892,
+          "types": [
+            "str"
+          ]
+        },
+        "CommandLine": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "Company": {
+          "populated": 238,
+          "types": [
+            "str"
+          ]
+        },
+        "CreationUtcTime": {
+          "populated": 6,
+          "types": [
+            "str"
+          ]
+        },
+        "CurrentDirectory": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "Description": {
+          "populated": 238,
+          "types": [
+            "str"
+          ]
+        },
+        "Details": {
+          "populated": 48,
+          "types": [
+            "str"
+          ]
+        },
+        "Device": {
+          "populated": 6,
+          "types": [
+            "str"
+          ]
+        },
+        "EventID": {
+          "populated": 892,
+          "types": [
+            "int"
+          ]
+        },
+        "EventType": {
+          "populated": 451,
+          "types": [
+            "str"
+          ]
+        },
+        "FileVersion": {
+          "populated": 238,
+          "types": [
+            "str"
+          ]
+        },
+        "GrantedAccess": {
+          "populated": 184,
+          "types": [
+            "str"
+          ]
+        },
+        "Hashes": {
+          "populated": 244,
+          "types": [
+            "str"
+          ]
+        },
+        "Hostname": {
+          "populated": 892,
+          "types": [
+            "str"
+          ]
+        },
+        "Image": {
+          "populated": 708,
+          "types": [
+            "str"
+          ]
+        },
+        "ImageLoaded": {
+          "populated": 238,
+          "types": [
+            "str"
+          ]
+        },
+        "IntegrityLevel": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "IsExecutable": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "Keywords": {
+          "populated": 892,
+          "types": [
+            "str"
+          ]
+        },
+        "Level": {
+          "populated": 892,
+          "types": [
+            "str"
+          ]
+        },
+        "LogonGuid": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "LogonId": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "Message": {
+          "populated": 892,
+          "types": [
+            "str"
+          ]
+        },
+        "OriginalFileName": {
+          "populated": 238,
+          "types": [
+            "str"
+          ]
+        },
+        "ParentCommandLine": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "ParentImage": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "ParentProcessGuid": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "ParentProcessId": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "PipeName": {
+          "populated": 2,
+          "types": [
+            "str"
+          ]
+        },
+        "PreviousCreationUtcTime": {
+          "populated": 1,
+          "types": [
+            "str"
+          ]
+        },
+        "ProcessGuid": {
+          "populated": 708,
+          "types": [
+            "str"
+          ]
+        },
+        "ProcessId": {
+          "populated": 708,
+          "types": [
+            "str"
+          ]
+        },
+        "Product": {
+          "populated": 238,
+          "types": [
+            "str"
+          ]
+        },
+        "ProviderGuid": {
+          "populated": 892,
+          "types": [
+            "str"
+          ]
+        },
+        "RuleName": {
+          "populated": 0,
+          "types": []
+        },
+        "Signature": {
+          "populated": 220,
+          "types": [
+            "str"
+          ]
+        },
+        "SignatureStatus": {
+          "populated": 238,
+          "types": [
+            "str"
+          ]
+        },
+        "Signed": {
+          "populated": 238,
+          "types": [
+            "str"
+          ]
+        },
+        "SourceImage": {
+          "populated": 184,
+          "types": [
+            "str"
+          ]
+        },
+        "SourceName": {
+          "populated": 892,
+          "types": [
+            "str"
+          ]
+        },
+        "SourceProcessGUID": {
+          "populated": 184,
+          "types": [
+            "str"
+          ]
+        },
+        "SourceProcessId": {
+          "populated": 184,
+          "types": [
+            "str"
+          ]
+        },
+        "SourceThreadId": {
+          "populated": 184,
+          "types": [
+            "str"
+          ]
+        },
+        "TargetFilename": {
+          "populated": 9,
+          "types": [
+            "str"
+          ]
+        },
+        "TargetImage": {
+          "populated": 184,
+          "types": [
+            "str"
+          ]
+        },
+        "TargetObject": {
+          "populated": 449,
+          "types": [
+            "str"
+          ]
+        },
+        "TargetProcessGUID": {
+          "populated": 184,
+          "types": [
+            "str"
+          ]
+        },
+        "TargetProcessId": {
+          "populated": 184,
+          "types": [
+            "str"
+          ]
+        },
+        "Task": {
+          "populated": 892,
+          "types": [
+            "str"
+          ]
+        },
+        "TerminalSessionId": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "TimeCreated": {
+          "populated": 892,
+          "types": [
+            "str"
+          ]
+        },
+        "User": {
+          "populated": 6,
+          "types": [
+            "str"
+          ]
+        },
+        "UtcTime": {
+          "populated": 892,
+          "types": [
+            "str"
+          ]
+        }
+      }
+    },
+    "Microsoft-Windows-Security-Auditing": {
+      "records": 232,
+      "event_ids": {
+        "5158": 1,
+        "5156": 1,
+        "4688": 3,
+        "4690": 48,
+        "4658": 95,
+        "4656": 48,
+        "4663": 32,
+        "4689": 1,
+        "4673": 2,
+        "4703": 1
+      },
+      "fields": {
+        "@timestamp": {
+          "populated": 232,
+          "types": [
+            "str"
+          ]
+        },
+        "AccessList": {
+          "populated": 80,
+          "types": [
+            "str"
+          ]
+        },
+        "AccessMask": {
+          "populated": 80,
+          "types": [
+            "str"
+          ]
+        },
+        "AccessReason": {
+          "populated": 0,
+          "types": []
+        },
+        "Application": {
+          "populated": 2,
+          "types": [
+            "str"
+          ]
+        },
+        "Channel": {
+          "populated": 232,
+          "types": [
+            "str"
+          ]
+        },
+        "CommandLine": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "DestAddress": {
+          "populated": 1,
+          "types": [
+            "str"
+          ]
+        },
+        "DestPort": {
+          "populated": 1,
+          "types": [
+            "str"
+          ]
+        },
+        "Direction": {
+          "populated": 1,
+          "types": [
+            "str"
+          ]
+        },
+        "DisabledPrivilegeList": {
+          "populated": 0,
+          "types": []
+        },
+        "EnabledPrivilegeList": {
+          "populated": 1,
+          "types": [
+            "str"
+          ]
+        },
+        "EventID": {
+          "populated": 232,
+          "types": [
+            "int"
+          ]
+        },
+        "FilterRTID": {
+          "populated": 2,
+          "types": [
+            "str"
+          ]
+        },
+        "HandleId": {
+          "populated": 175,
+          "types": [
+            "str"
+          ]
+        },
+        "Hostname": {
+          "populated": 232,
+          "types": [
+            "str"
+          ]
+        },
+        "Keywords": {
+          "populated": 232,
+          "types": [
+            "str"
+          ]
+        },
+        "LayerName": {
+          "populated": 2,
+          "types": [
+            "str"
+          ]
+        },
+        "LayerRTID": {
+          "populated": 2,
+          "types": [
+            "str"
+          ]
+        },
+        "Level": {
+          "populated": 232,
+          "types": [
+            "str"
+          ]
+        },
+        "MandatoryLabel": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "Message": {
+          "populated": 232,
+          "types": [
+            "str"
+          ]
+        },
+        "NewProcessId": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "NewProcessName": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "ObjectName": {
+          "populated": 80,
+          "types": [
+            "str"
+          ]
+        },
+        "ObjectServer": {
+          "populated": 177,
+          "types": [
+            "str"
+          ]
+        },
+        "ObjectType": {
+          "populated": 80,
+          "types": [
+            "str"
+          ]
+        },
+        "ParentProcessName": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "PrivilegeList": {
+          "populated": 2,
+          "types": [
+            "str"
+          ]
+        },
+        "ProcessID": {
+          "populated": 1,
+          "types": [
+            "str"
+          ]
+        },
+        "ProcessId": {
+          "populated": 183,
+          "types": [
+            "str"
+          ]
+        },
+        "ProcessName": {
+          "populated": 179,
+          "types": [
+            "str"
+          ]
+        },
+        "Protocol": {
+          "populated": 2,
+          "types": [
+            "str"
+          ]
+        },
+        "ProviderGuid": {
+          "populated": 232,
+          "types": [
+            "str"
+          ]
+        },
+        "RemoteMachineID": {
+          "populated": 1,
+          "types": [
+            "str"
+          ]
+        },
+        "RemoteUserID": {
+          "populated": 1,
+          "types": [
+            "str"
+          ]
+        },
+        "ResourceAttributes": {
+          "populated": 0,
+          "types": []
+        },
+        "RestrictedSidCount": {
+          "populated": 48,
+          "types": [
+            "str"
+          ]
+        },
+        "Service": {
+          "populated": 0,
+          "types": []
+        },
+        "SourceAddress": {
+          "populated": 2,
+          "types": [
+            "str"
+          ]
+        },
+        "SourceHandleId": {
+          "populated": 48,
+          "types": [
+            "str"
+          ]
+        },
+        "SourceName": {
+          "populated": 232,
+          "types": [
+            "str"
+          ]
+        },
+        "SourcePort": {
+          "populated": 2,
+          "types": [
+            "str"
+          ]
+        },
+        "SourceProcessId": {
+          "populated": 48,
+          "types": [
+            "str"
+          ]
+        },
+        "Status": {
+          "populated": 1,
+          "types": [
+            "str"
+          ]
+        },
+        "SubjectDomainName": {
+          "populated": 230,
+          "types": [
+            "str"
+          ]
+        },
+        "SubjectLogonId": {
+          "populated": 230,
+          "types": [
+            "str"
+          ]
+        },
+        "SubjectUserName": {
+          "populated": 230,
+          "types": [
+            "str"
+          ]
+        },
+        "SubjectUserSid": {
+          "populated": 230,
+          "types": [
+            "str"
+          ]
+        },
+        "TargetDomainName": {
+          "populated": 1,
+          "types": [
+            "str"
+          ]
+        },
+        "TargetHandleId": {
+          "populated": 48,
+          "types": [
+            "str"
+          ]
+        },
+        "TargetLogonId": {
+          "populated": 4,
+          "types": [
+            "str"
+          ]
+        },
+        "TargetProcessId": {
+          "populated": 48,
+          "types": [
+            "str"
+          ]
+        },
+        "TargetUserName": {
+          "populated": 1,
+          "types": [
+            "str"
+          ]
+        },
+        "TargetUserSid": {
+          "populated": 4,
+          "types": [
+            "str"
+          ]
+        },
+        "Task": {
+          "populated": 232,
+          "types": [
+            "str"
+          ]
+        },
+        "TimeCreated": {
+          "populated": 232,
+          "types": [
+            "str"
+          ]
+        },
+        "TokenElevationType": {
+          "populated": 3,
+          "types": [
+            "str"
+          ]
+        },
+        "TransactionId": {
+          "populated": 48,
+          "types": [
+            "str"
+          ]
+        }
+      }
+    },
+    "Microsoft-Windows-PowerShell": {
+      "records": 0,
+      "event_ids": {},
+      "fields": {}
+    }
+  }
+}

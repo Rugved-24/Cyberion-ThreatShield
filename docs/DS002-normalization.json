@@ -1,0 +1,31 @@
+{
+  "dataset_id": "DS002",
+  "status": "PASS",
+  "source_file": "data/raw/DS002/empire_psexec_dcerpc_tcp_svcctl_2020-09-20121608.json",
+  "raw_sha256": "968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC",
+  "normalizer_sha256": "7A44EC4069B95EFAD3AA61A1D0C1A300865E54D73F59CB610652E97A50BD24E9",
+  "expected_records": 4348,
+  "input_records": 4348,
+  "blank_lines": 0,
+  "normalized_records": 4348,
+  "unique_event_uids": 4348,
+  "duplicate_content_extra_records": 0,
+  "timestamp_utc_records": 2941,
+  "timestamp_unresolved_records": 1407,
+  "timestamp_errors": 0,
+  "rejected_records": 0,
+  "errors": [],
+  "providers": {
+    "Microsoft-Windows-Sysmon": 2941,
+    "Microsoft-Windows-Security-Auditing": 599,
+    "PowerShell": 440,
+    "Microsoft-Windows-PowerShell": 354,
+    "Microsoft-Windows-TaskScheduler": 1,
+    "Service Control Manager": 6,
+    "Microsoft-Windows-WMI-Activity": 3,
+    "Microsoft-Windows-Hyper-V-Netvsc": 4
+  },
+  "output_file": "data/processed/DS002.jsonl",
+  "output_written": true,
+  "output_sha256": "9387DE2C3F01BF269F8FDD420F3D7E72D6977C7DBD76007B6F186AECACFAF64F"
+}

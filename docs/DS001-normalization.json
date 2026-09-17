@@ -1,0 +1,26 @@
+{
+  "dataset_id": "DS001",
+  "status": "PASS",
+  "source_file": "data/raw/DS001/cmd_mshta_vbscript_execute_psh_2020-10-2202580804.json",
+  "raw_sha256": "25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32",
+  "normalizer_sha256": "7A44EC4069B95EFAD3AA61A1D0C1A300865E54D73F59CB610652E97A50BD24E9",
+  "expected_records": 1127,
+  "input_records": 1127,
+  "blank_lines": 0,
+  "normalized_records": 1127,
+  "unique_event_uids": 1127,
+  "duplicate_content_extra_records": 74,
+  "timestamp_utc_records": 892,
+  "timestamp_unresolved_records": 235,
+  "timestamp_errors": 0,
+  "rejected_records": 0,
+  "errors": [],
+  "providers": {
+    "Microsoft-Windows-Eventlog": 3,
+    "Microsoft-Windows-Security-Auditing": 232,
+    "Microsoft-Windows-Sysmon": 892
+  },
+  "output_file": "data/processed/DS001.jsonl",
+  "output_written": true,
+  "output_sha256": "25EF4BF0DDE5A4207B69201C96686FE6C341D0125FDEC178166D695AB334DF33"
+}

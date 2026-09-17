@@ -1,0 +1,8 @@
+{
+  "dataset_id": "DS001",
+  "status": "PASS",
+  "raw_sha256": "25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32",
+  "output_sha256": "25EF4BF0DDE5A4207B69201C96686FE6C341D0125FDEC178166D695AB334DF33",
+  "traceable_records": 1127,
+  "single_fragment_script_blocks": 0
+}
