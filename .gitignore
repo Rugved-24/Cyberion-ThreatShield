@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.env
+.env.*
+!.env.example
+data/raw/
+data/processed/
+data/private/
+*.evtx
+*.pcap
+*.pcapng
+*.zip
+*.7z
+*.log
