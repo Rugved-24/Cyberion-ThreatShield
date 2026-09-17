@@ -1,0 +1,10 @@
+﻿{
+    "dataset_id":  "DS001",
+    "provider":  "OTRF",
+    "scenario":  "Mshta VBScript Execute PowerShell",
+    "download_url":  "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/defense_evasion/host/cmd_mshta_vbscript_execute_psh.zip",
+    "acquired_utc":  "2026-09-17T07:35:29.3033195Z",
+    "archive":  "data/raw/DS001/cmd_mshta_vbscript_execute_psh.zip",
+    "bytes":  88544,
+    "sha256":  "F5F700BC986BBE73EDCC209754B28A3E0AD38C56877F7FC5ED6FD04BC036D9F4"
+}

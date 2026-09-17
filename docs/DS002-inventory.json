@@ -1,0 +1,27 @@
+{
+  "dataset_id": "DS002",
+  "file": "data/raw/DS002/empire_psexec_dcerpc_tcp_svcctl_2020-09-20121608.json",
+  "bytes": 12650959,
+  "sha256": "968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC",
+  "records": 4348,
+  "Channel": {
+    "Microsoft-Windows-Sysmon/Operational": 2941,
+    "Security": 216,
+    "security": 383,
+    "Windows PowerShell": 440,
+    "Microsoft-Windows-PowerShell/Operational": 354,
+    "Microsoft-Windows-TaskScheduler/Operational": 1,
+    "System": 10,
+    "Microsoft-Windows-WMI-Activity/Operational": 3
+  },
+  "SourceName": {
+    "Microsoft-Windows-Sysmon": 2941,
+    "Microsoft-Windows-Security-Auditing": 599,
+    "PowerShell": 440,
+    "Microsoft-Windows-PowerShell": 354,
+    "Microsoft-Windows-TaskScheduler": 1,
+    "Service Control Manager": 6,
+    "Microsoft-Windows-WMI-Activity": 3,
+    "Microsoft-Windows-Hyper-V-Netvsc": 4
+  }
+}

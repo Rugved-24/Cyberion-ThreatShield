@@ -1,18 +1,14 @@
-﻿# Cyberion ThreatShield Progress
+# Cyberion ThreatShield Progress
 
 Working mode: on demand, without deadlines or session limits.
-Current phase: 1 - Repository, scope, and progress tracking.
+Current phase: 3 - Parsing, normalization and data dictionaries.
 
-## Verified
-- [x] Phase 0: isolated environment and core tools validated.
-- [x] Git repository initialized on main.
-- [x] Project directories created.
-- [x] Virtual environment excluded from Git.
+## Completed
+- [x] Phase 0: environment and core tools validated.
+- [x] Phase 1: repository, scope and methodology; commit 1903adf.
+- [x] Phase 2: acquisition, inventories, provenance and data plans.
+- [x] Three telemetry source types verified across DS001 and DS002.
+- [x] Timestamp discrepancies and unresolved host aliases documented.
 
-## Remaining in Phase 1
-- [ ] Review environment record and dependency snapshot.
-- [ ] Document scope, acceptance criteria, and methodology.
-- [ ] Review staged files and create the first commit.
-
-Next action: validate these files, then complete scope and methodology.
-Phases 2-16: not started.
+Next action: inspect source fields and create the data dictionary.
+Phase 3 implementation and Phases 4-16: not started.
