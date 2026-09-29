@@ -1,7 +1,7 @@
 ﻿# Cyberion ThreatShield Progress
 
 Working mode: on demand, without deadlines or session limits.
-Current phase: 4 - ATT&CK mapping and detection backlog.
+Current phase: 5 - Sigma rule implementation and replay testing.
 
 ## Completed
 
@@ -9,6 +9,7 @@ Current phase: 4 - ATT&CK mapping and detection backlog.
 - [x] Phase 1: repository, scope and methodology; commit 1903adf.
 - [x] Phase 2: datasets, provenance and data plans; commit c1a5666.
 - [x] Phase 3: field profiles, dictionaries, normalization and traceability.
+- [x] Phase 4: ATT&CK mapping and detection backlog.
 
 ## Phase 3 Results
 
@@ -19,11 +20,22 @@ Current phase: 4 - ATT&CK mapping and detection backlog.
 - DS002: one script block verified against its single-fragment metadata.
 - Evidence: docs/DS001-validation.json and docs/DS002-validation.json.
 
+## Phase 4 Results
+
+- 20 distinct ATT&CK technique IDs assessed across 11 tactics, ATT&CK 19.2.
+- All 20 recorded Not Covered; 0 tested detections at this checkpoint.
+- Evidence states: 4 candidate, 5 mapping review, 8 needs corroboration, 3 gap.
+- Seven detection candidates recorded: CT-001..004 and CT-C01..03.
+- Coverage baseline: coverage/assessment.md and coverage/baseline.json.
+- baseline.json SHA-256: 0545961215106A38AAF5D8B4A497C5207765A7B839E9A098BD84849BFC5E03BD.
+- Cited source lines re-verified against the normalized records before the checkpoint.
+- Navigator import remains a local manual check; not performed in this session.
+
 ## Continuing Limitations
 
 - Event-time UTC remains unresolved for 235 DS001 and 1407 DS002 records.
 - Host aliases and PowerShell unresolved-flag semantics remain unverified.
 - Benign comparison collection and redistribution-terms review remain pending.
 
-Next action: create an evidence-backed ATT&CK mapping and detection backlog.
-Phases 4-16: implementation not started.
+Next action: implement CT-001..CT-004 and replay them against the recorded telemetry.
+Phases 5-16: implementation not started.
