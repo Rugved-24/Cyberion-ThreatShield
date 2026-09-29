@@ -1,4 +1,4 @@
-﻿# Scope and Acceptance Criteria
+# Scope and Acceptance Criteria
 
 Independent detection-engineering work in a simulated client scenario.
 

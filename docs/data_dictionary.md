@@ -1,4 +1,4 @@
-﻿# Data Dictionary
+# Data Dictionary
 
 Scope: observed DS001 and DS002 exports.
 Complete field counts and observed types: DS001-fields.json and DS002-fields.json.

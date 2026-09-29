@@ -72,5 +72,6 @@
       }
     }
   },
-  "note": "Ranges are per field; wall-clock differences do not establish timezones."
+  "note": "Ranges are per field; wall-clock differences do not establish timezones.",
+  "verified_sha256": "968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC"
 }

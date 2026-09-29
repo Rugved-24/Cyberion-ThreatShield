@@ -1,4 +1,4 @@
-﻿# Working Method
+# Working Method
 
 ## Data
 Record source URLs, usage terms, acquisition dates, and SHA-256 hashes.

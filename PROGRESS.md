@@ -1,7 +1,8 @@
-﻿# Cyberion ThreatShield Progress
+# Cyberion ThreatShield Progress
 
 Working mode: on demand, without deadlines or session limits.
-Current phase: 6 complete. All product-requirements deliverables present.
+Current phase: 7 complete. All product-requirements deliverables present, plus a
+security review and a publication redaction path.
 
 ## Completed
 
@@ -12,6 +13,7 @@ Current phase: 6 complete. All product-requirements deliverables present.
 - [x] Phase 4: ATT&CK mapping and detection backlog; commit a85ce34.
 - [x] Phase 5: rule template, shared test harness, first replayed rule.
 - [x] Phase 6: full rule library, tuning, coverage, hunts, incidents, playbooks.
+- [x] Phase 7: security review, hardening, publication redaction.
 
 ## Phase 3 Results
 
@@ -107,6 +109,30 @@ Current phase: 6 complete. All product-requirements deliverables present.
   DO NOT BLOCK with the reason.
 - Executive summary in business language with a glossary.
 - 14-slide deck outline with anticipated questions.
+
+## Phase 7 Results: security review and publication redaction
+
+- scripts/security_review.py: nine controls asserted in code. Current state
+  **8 pass, 1 warn, 0 fail**. A warn is not a pass and the exit code reflects it.
+- Defects found and fixed, all real:
+  - `check_capture.py` read raw telemetry without verifying its digest and wrote a
+    tracked evidence file from it. This was the most serious issue found and it
+    broke the project's core evidence contract. Digest verification now precedes
+    the first record read and the verified digest is recorded in the output.
+  - `inventory_dataset.py` built a path from an unvalidated argument, and
+    extracted an archive member with no size limit. Identifier validation and a
+    size check added; the destination is confined to the archive's directory.
+  - Byte-order marks in 13 committed files, three introduced during this work.
+    Removed by scripts/normalize_text.py; control C9 prevents recurrence.
+- scripts/sanitize.py produces a publishable redacted copy. 27 values masked, 0
+  residual, and all 52 event UIDs preserved. The sensitive value set is derived
+  from the recorded telemetry, not hand-maintained, so it cannot drift.
+- A non-deterministic pseudonym assignment was found and fixed: equal-length
+  values were ordered by set iteration, which varies with hash randomisation, so
+  the manifest did not verify against its own key.
+- SECURITY.md records the threat model, the controls, and six residual risks. It
+  states explicitly that the project is not vulnerability-free and cannot be made
+  immune to attack.
 
 ## Continuing Limitations
 

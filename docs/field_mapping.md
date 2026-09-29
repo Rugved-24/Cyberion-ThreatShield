@@ -1,4 +1,4 @@
-﻿# Field Mapping v1
+# Field Mapping v1
 
 Apply mappings by exact SourceName and, where specified, EventID.
 Preserve every input event and its complete original object in raw.

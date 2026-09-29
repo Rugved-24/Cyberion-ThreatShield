@@ -1,4 +1,4 @@
-﻿# Cyberion ThreatShield
+# Cyberion ThreatShield
 
 An independent detection-engineering and threat-hunting project using public
 security telemetry in a simulated client scenario.
@@ -66,6 +66,28 @@ data/           raw (immutable, gitignored), processed, private
 4. **No host aliases are merged.** `WORKSTATION5` and
    `WORKSTATION5.theshire.local` stay separate, and no conclusion in this
    repository depends on them being the same machine.
+
+## Security
+
+This repository has no service, no listener and no deployed component, so there is
+no remote attack surface. It is **not** vulnerability-free and does not claim to
+be. `SECURITY.md` states the threat model, the nine controls asserted in code, the
+defects found and fixed, and the residual risks that remain.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\security_review.py   # exit 0 pass, 1 fail, 2 warn
+```
+
+A clean run means the listed controls hold. It does not mean the project is
+secure, and it does not change any coverage rating.
+
+To publish a redacted copy that masks host names, account names and internal
+addresses while preserving every event UID and conclusion:
+
+```powershell
+$env:CYBERION_REDACTION_KEY = "<long random value>"
+.\.venv\Scripts\python.exe scripts\sanitize.py --out ..\Cyberion-ThreatShield-public
+```
 
 ## Status and next step
 

@@ -1,4 +1,4 @@
-﻿# Environment
+# Environment
 
 Platform: Windows, PowerShell 5.1
 Python: 3.12.10, project-local .venv

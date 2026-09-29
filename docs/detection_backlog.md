@@ -1,4 +1,4 @@
-﻿# Detection Backlog
+# Detection Backlog
 
 Status: **superseded by the implemented rule library.** The seven candidates below
 were recorded in Phase 4 and all seven were implemented and replayed. Six further
