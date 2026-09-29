@@ -75,6 +75,23 @@ FIELDS = {
     "ScriptBlockText": "script_block_text",
     "ContextInfo": "context_info",
     "Payload": "payload",
+    "SourceImage": "SourceImage",
+    "TargetImage": "TargetImage",
+    "GrantedAccess": "GrantedAccess",
+    "CallTrace": "CallTrace",
+    "QueryName": "QueryName",
+    "QueryStatus": "QueryStatus",
+    "ServiceName": "ServiceName",
+    "ServiceFileName": "ServiceFileName",
+    "ServiceStartType": "ServiceStartType",
+    "ServiceAccount": "ServiceAccount",
+    "LogonType": "LogonType",
+    "TargetUserName": "target_user",
+    "SubjectUserName": "subject_user",
+    "ShareName": "ShareName",
+    "RelativeTargetName": "RelativeTargetName",
+    "TargetObject": "TargetObject",
+    "DestinationPort": "DestinationPort",
 }
 QUANTIFIERS = {"all": lambda items: all(items), "any": lambda items: any(items)}
 OPERATORS = {
@@ -85,6 +102,7 @@ OPERATORS = {
     "exists": lambda value, _: value not in (None, "", "-"),
 }
 ANCHOR = ("EventID", "Provider", "SourceName", "Channel")
+NUMERIC = {"LogonType", "ServiceStartType", "DestinationPort"}
 
 
 class RuleError(ValueError):
@@ -122,6 +140,10 @@ def load_datasets(root):
             raise RuleError(f"{dataset}: processed SHA-256 differs from the normalization report")
         frame = pd.read_json(path, lines=True, convert_dates=False)
         frame["timestamp_instant"] = frame["timestamp_utc"].map(parse_instant)
+        for field in sorted(set(FIELDS.values()) - set(frame.columns)):
+            frame[field] = [event.get(field) for event in frame["raw"]]
+            if field in NUMERIC:
+                frame[field] = frame[field].map(coerce_number)
         frames[dataset] = frame
     if not frames:
         raise RuleError("no processed datasets found; run normalize_dataset.py first")
@@ -132,6 +154,14 @@ def parse_instant(value):
     if not present(value) or not isinstance(value, str):
         return None
     return datetime.fromisoformat(value)
+
+
+def coerce_number(value):
+    """SIEMs index numeric-looking log fields as numbers, so rules write them
+    as numbers. The original string is always still available in raw."""
+    if isinstance(value, str) and re.fullmatch(r"-?\d+", value):
+        return int(value)
+    return value
 
 
 def split_name(field):

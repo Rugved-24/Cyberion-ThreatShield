@@ -1,0 +1,85 @@
+title: CT-012 - Network Logon by a Named User Account
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b440c
+status: experimental
+description: >
+  Detects a Security 4624 logon of type 3, a network logon, where the target
+  is a named interactive account rather than a machine account. Machine
+  accounts and replicated service logons are excluded because on a busy domain
+  controller they are the overwhelming majority of type 3 logons and are not
+  an investigation lead.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1078/
+  - evidence/tuning/CT-012-false-positive.md
+tags:
+  - attack.stealth
+  - attack.persistence
+  - attack.privilege-escalation
+  - attack.initial-access
+  - attack.t1078
+logsource:
+  product: windows
+  service: security
+detection:
+  selection_type:
+    EventID: 4624
+    Provider: 'Microsoft-Windows-Security-Auditing'
+    LogonType: 3
+  selection_account:
+    TargetUserName|exists: true
+  filter_machine:
+    TargetUserName|endswith: '$'
+  condition: selection_type and selection_account and not filter_machine
+falsepositives:
+  - Scheduled tasks, management agents and monitoring probes that run under a named
+    service account and authenticate to remote hosts.
+  - Administrative remote logins from a managed jump host. These should be attributed to a
+    change record rather than suppressed.
+fields:
+  - EventID
+  - Provider
+  - LogonType
+  - TargetUserName
+level: medium
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1078
+x-severity:
+  level: medium
+  rationale: >
+    Medium, and deliberately the lowest severity in the library. A type 3
+    logon by a named account is extremely common in any environment with
+    scheduled tasks and monitoring. The rule earns its place by being narrow
+    enough to be actionable after tuning, not because the raw logon type is
+    unusual; the escalation logic in the correlation rules and the playbook is
+    what makes a hit significant.
+x-scope:
+  covered: >
+    Security Auditing event 4624 with logon type 3 where the target account name
+    is present and does not end with the machine-account marker.
+  excluded: >
+    Machine accounts, the anonymous and system accounts, interactive and
+    service logon types other than 3, and any host that does not log 4624.
+x-evidence:
+  expected_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1209'
+  negative_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1213'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:728'
+  note: >
+    DS002:1209 is the declared match, a type 3 logon for the named account
+    pgustavo. The six type 3 logons for the machine account MORDORDC$ on the
+    same host are the declared false positives that this rule excludes; they
+    are recorded in evidence/tuning/CT-012-false-positive.md with the before
+    and after counts.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    Unlike the process rules, this rule does have a real benign comparison in
+    the recorded telemetry: six machine-account logons on the same host, which
+    the tuned logic removes completely. That is the only rule in this library
+    with both a confirmed malicious match and a measured benign result, and it
+    is the reason T1078 is the single technique scored Covered.

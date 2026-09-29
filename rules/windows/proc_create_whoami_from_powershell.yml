@@ -1,0 +1,78 @@
+title: CT-004 - whoami Started by a PowerShell Process
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4404
+status: experimental
+description: >
+  Detects whoami.exe created by a PowerShell parent. A PowerShell process
+  that shells out to the account discovery utility is enumerating the account
+  it is running as, which is a standard first step after gaining execution.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1033/
+  - docs/detection_backlog.md
+tags:
+  - attack.discovery
+  - attack.t1033
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\whoami.exe'
+    ParentImage|endswith: '\powershell.exe'
+  condition: selection
+falsepositives:
+  - Administrative and support scripts that confirm the effective identity before changing
+    permissions or diagnosing a scheduled task, and ticketing macros that record the
+    running account.
+  - Imaging, deployment and inventory tooling that enumerates the local account as part of
+    a health check.
+fields:
+  - EventID
+  - Provider
+  - Image
+  - ParentImage
+level: medium
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1033
+x-severity:
+  level: medium
+  rationale: >
+    Medium. The behaviour is genuinely dual-use and whoami is a single
+    information-gathering step rather than an impact action. It is rated medium
+    rather than low because the parent context matters: a shell interpreter
+    invoking an account utility is unusual compared with an administrator typing
+    it, and in this dataset the parent is the encoded PowerShell entry point.
+    Severity is deliberately lower than CT-002 because the encoding is the
+    concealment signal and this rule only observes the discovery step.
+x-scope:
+  covered: >
+    Sysmon event 1 process creation where the image is whoami.exe and the parent
+    image is powershell.exe.
+  excluded: >
+    whoami.exe run interactively by a user, run by cmd.exe or by a management
+    agent, and any account discovery performed inside PowerShell script text
+    without launching the binary.
+x-evidence:
+  expected_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2901'
+  negative_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1073'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1057'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1087'
+  note: >
+    DS002:2901 is the declared match. DS002:1073 is its GUID-linked parent and
+    must be rejected because it is powershell.exe rather than whoami.exe.
+    DS002:1057 and DS002:1087 are the other process creations in the dataset.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    The dataset records this discovery exactly once and it is attack activity.
+    Scripted administrative inventory is a plausible benign source and is
+    listed above, but it has not been observed in this telemetry, so the
+    false-positive rate is unmeasured.

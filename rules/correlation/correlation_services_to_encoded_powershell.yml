@@ -1,0 +1,104 @@
+title: CT-C02 - Service-Launched Shell Creating an Encoded PowerShell Process
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4502
+status: experimental
+description: >
+  Correlates the command shell created by the Service Control Manager with a
+  later PowerShell process creation that carries an encoded command, joined on
+  the process GUID, on the same recording and exact host, within a bounded
+  window. The pair is what places concealed script execution inside a service
+  context and therefore under a machine account rather than a user session.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1569/002/
+  - https://attack.mitre.org/versions/v19/techniques/T1059/001/
+  - docs/detection_backlog.md
+tags:
+  - attack.execution
+  - attack.t1569.002
+  - attack.t1059.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  parent:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\cmd.exe'
+    ParentImage|endswith: '\services.exe'
+  child:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\powershell.exe'
+    CommandLine|re: '(?i)-(e|ec|enc|enco|encod|encode|encoded|encodedcommand)\s+[A-Za-z0-9+/=]{20,}'
+  condition: parent and child
+falsepositives:
+  - Remote execution frameworks and management agents whose service launches a shell which
+    in turn runs an encoded PowerShell payload.
+fields:
+  - EventID
+  - Provider
+  - Image
+  - ParentImage
+  - CommandLine
+  - ProcessGuid
+  - ParentProcessGuid
+level: critical
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1569.002
+    - T1059.001
+x-severity:
+  level: critical
+  rationale: >
+    Critical, and the highest-rated correlation in the library. The two events
+    together establish that concealed script execution happened under a service,
+    which means it survives user logoff and needs no interactive access. That
+    combination is the reason the rule is not simply a duplicate of CT-002 or
+    CT-003: each single rule would fire on a different, less urgent context.
+x-scope:
+  covered: >
+    A services.exe parented cmd.exe and a later encoded-command powershell.exe
+    Sysmon event 1 pair, within one dataset, one exact host string and a five
+    second window, joined on the child's parent process GUID matching the
+    parent's process GUID, with both event times resolved.
+  excluded: >
+    A service that launches PowerShell directly without an intervening shell,
+    an encoded command executed by a user session, cross-host pairings, and any
+    pair where either timestamp is unresolved.
+x-evidence:
+  expected_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1057'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1073'
+  negative_event_uids:
+    []
+  note: >
+    DS002:1057 is the parent and DS002:1073 is the GUID-linked child, 0.023
+    seconds apart. The window matrix proves the boundary is enforced at the
+    observed delay. This is also the pairing that carries the strongest
+    privilege implication in the dataset, because the same encoded command text
+    appears in a service installation record whose account is LocalSystem.
+x-correlation:
+  parent: parent
+  child: child
+  join_field: process_guid -> parent_process_guid
+  scope: same dataset, exact host string, both event times resolved
+  window_seconds: 5
+  window_tests:
+    - window_seconds: 0.022
+      expect: no match
+    - window_seconds: 0.023
+      expect: match
+    - window_seconds: 5
+      expect: match
+    - window_seconds: 60
+      expect: match
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    No benign chain of this shape is recorded, so the false-positive rate is
+    unmeasured. The window is deliberately loose relative to the 0.023 second
+    observation: a rule pinned to 23 milliseconds would be a rule written for
+    one sample and would fail on the next replay of the same technique.

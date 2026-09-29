@@ -1,0 +1,74 @@
+title: CT-007 - PowerShell Script Block Forcing the AMSI Failure Flag
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4407
+status: experimental
+description: >
+  Detects a PowerShell script block that sets the internal AmsiUtils
+  initialisation-failure field, which makes every later script scan report
+  that no antivirus engine is present. The content is not an antivirus
+  command; it is a manipulation of the scanner's own state.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1685/
+  - docs/detection_backlog.md
+tags:
+  - attack.defense-impairment
+  - attack.t1685
+logsource:
+  product: windows
+  service: powershell
+  category: ps_script_block
+detection:
+  selection:
+    EventID: 4104
+    Provider: 'Microsoft-Windows-PowerShell'
+    ScriptBlockText|contains: 'Amsi'
+    ScriptBlockText|contains: 'InitF'
+  condition: selection
+falsepositives:
+  - Security tooling or research code that manipulates AMSI fields to prove a bypass
+    works. Legitimate in a lab, never in production administration.
+fields:
+  - EventID
+  - Provider
+  - ScriptBlockText
+level: critical
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1685
+x-severity:
+  level: critical
+  rationale: >
+    Critical, for the same reasons as CT-006: an explicit action against a
+    defensive control. It is kept as a separate rule from CT-006 because the
+    two bypasses can be deployed independently, and an analyst investigating a
+    hit needs to know which control was targeted. The two rules read the same
+    single script block here, but they test different behaviour and would
+    diverge in an environment where only one bypass is used.
+x-scope:
+  covered: >
+    PowerShell Operational event 4104 whose script block text references both
+    the AMSI utility type and its initialisation-failure field, in any letter
+    casing.
+  excluded: >
+    AMSI references inside comments or documentation strings, alternate
+    reflection chains that never name the utility type, and behaviour performed
+    from a non-PowerShell host such as C# compiled at runtime.
+x-evidence:
+  expected_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1827'
+  negative_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:42'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2877'
+  note: >
+    DS002:1827 is the declared match and contains both indicators. DS002:42 and
+    DS002:2877 are module logging records that must not match.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    No benign example exists in the recorded telemetry, and by definition a
+    legitimate production script should not manipulate AMSI state. The residual
+    false-positive risk is lab and detection-engineering tooling, which should
+    be handled by host exclusion rather than by weakening the rule.

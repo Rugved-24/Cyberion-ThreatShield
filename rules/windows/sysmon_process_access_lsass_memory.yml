@@ -1,0 +1,92 @@
+title: CT-013 - Process Access to LSASS by a Non-System Caller
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b440d
+status: experimental
+description: >
+  Detects a process opening a handle to lsass.exe with a memory-read access
+  right, excluding the Windows session manager and memory compression
+  components that access LSASS legitimately on every sign-in and every
+  memory-pressure event. What remains is the pattern used to copy credentials
+  out of the LSASS process.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1003/001/
+  - evidence/tuning/CT-013-false-positive.md
+tags:
+  - attack.credential-access
+  - attack.t1003.001
+logsource:
+  category: process_access
+detection:
+  selection_target:
+    EventID: 10
+    Provider: 'Microsoft-Windows-Sysmon'
+    TargetImage|endswith: '\lsass.exe'
+  filter_lsm:
+    CallTrace|contains: 'lsm.dll'
+  filter_compression:
+    CallTrace|contains: 'sysmain.dll'
+  condition: selection_target and not filter_lsm and not filter_compression
+falsepositives:
+  - Backup, monitoring and crash-reporting agents that read LSASS memory to capture
+    credentials for their own service account.
+  - Credential management products and endpoint agents that use a signed driver and should
+    be identified by signature rather than by call trace.
+fields:
+  - EventID
+  - Provider
+  - TargetImage
+  - GrantedAccess
+  - CallTrace
+level: high
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1003.001
+x-severity:
+  level: high
+  rationale: >
+    High as a class, because reading LSASS is the standard route to domain
+    credential theft, but with an important caveat recorded in the rule's own
+    evidence block: in the telemetry available for this engagement the rule
+    matches nothing, because every LSASS access observed is attributable to a
+    Windows component. The rating describes what the rule is for, not an
+    observed finding, and the technique is deliberately left at Not Covered.
+x-scope:
+  covered: >
+    Sysmon event 10 process access targeting lsass.exe where the recorded call
+    trace does not contain the logon session manager or memory compression
+    modules.
+  excluded: >
+    LSASS access by the logon session manager or memory compression, access with
+    a query-only access right and no memory read, and hosts where Sysmon
+    process-access auditing is not enabled.
+x-evidence:
+  expected_event_uids:
+    []
+  negative_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2466'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2467'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:3108'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:4276'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:4278'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:4332'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:4333'
+  note: >
+    No attacker instance of this behaviour exists in the recorded telemetry, so
+    the expected evidence list is deliberately empty. All seven LSASS access
+    records in DS002 are declared negatives: each is a 0x1000 or 0x3000 handle
+    opened by svchost.exe whose call trace resolves to lsm.dll, the logon session
+    manager, or sysmain.dll, the memory compression driver. They are normal
+    Windows activity and the tuned rule correctly rejects all seven. The
+    before and after counts are in evidence/tuning/CT-013-false-positive.md.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    This rule was written and tuned against observed benign activity, which is
+    the strongest benign evidence available for this technique, and it is still
+    not scored as coverage. The trade-off is explicit: excluding lsm.dll and
+    sysmain.dll by module name would also suppress a malicious process that
+    injected into one of those modules, and a production deployment should
+    instead allow-list by binary signature and verified path.

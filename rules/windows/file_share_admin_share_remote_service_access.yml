@@ -1,0 +1,89 @@
+title: CT-014 - Admin or Service Share Access by a User Account
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b440e
+status: experimental
+description: >
+  Detects Security 5140 and 5145 share access events on an administrative or
+  service share by a named user account, excluding machine accounts and
+  excluding the group policy template files that domain controllers read
+  during normal SYSVOL replication.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1021/002/
+  - evidence/tuning/CT-014-false-positive.md
+tags:
+  - attack.lateral-movement
+  - attack.t1021.002
+logsource:
+  product: windows
+  service: security
+detection:
+  selection_event:
+    EventID:
+      - 5140
+      - 5145
+    Provider: 'Microsoft-Windows-Security-Auditing'
+  filter_machine:
+    SubjectUserName|endswith: '$'
+  filter_gpt:
+    RelativeTargetName|contains: 'gpt.ini'
+  condition: selection_event and not filter_machine and not filter_gpt
+falsepositives:
+  - Backup agents, file-copy jobs and deployment tooling that read administrative shares
+    using a named service account.
+  - Administrative inspection of SYSVOL or ADMIN$ by an engineer during an investigation.
+fields:
+  - EventID
+  - Provider
+  - ShareName
+  - SubjectUserName
+  - RelativeTargetName
+level: medium
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1021.002
+x-severity:
+  level: medium
+  rationale: >
+    Medium, and retained in the library for a specific reason rather than
+    because it fires. Remote service access is the transport used for most
+    lateral movement, so a client asking for coverage of the technique needs
+    something to point at. The rating is medium because share access is
+    extremely common, and the honest position is that this rule has no
+    confirmed detection in the available telemetry.
+x-scope:
+  covered: >
+    Security Auditing events 5140 and 5145 where the subject is not a machine
+    account and the accessed object is not a group policy template file.
+  excluded: >
+    Machine-account access, domain controller SYSVOL policy template reads,
+    access to ordinary file shares rather than administrative shares, and any
+    host that does not enable detailed file share auditing.
+x-evidence:
+  expected_event_uids:
+    []
+  negative_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:728'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:729'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:730'
+  note: >
+    No attacker instance of remote service execution exists in the recorded
+    telemetry and the expected evidence list is deliberately empty. All three
+    share records in DS002 are declared negatives: the subject is the machine
+    account MORDORDC$ and the objects are the SYSVOL gpt.ini policy templates
+    on a domain controller, which is ordinary Group Policy replication. The
+    scenario name in the source dataset refers to a PsExec-style lateral
+    movement technique, but the recorded events do not show it, and a dataset
+    directory name is not evidence. Before and after counts are in
+    evidence/tuning/CT-014-false-positive.md.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    Every match the untuned logic produced was benign, and the tuned logic
+    removes all of them. The accepted trade-off is that the two exclusions are
+    narrow, name-based and environment-specific: a different file share layout
+    or a deployment where backups run under a named account would need the
+    filters revisited, and the rule must not be read as evidence that lateral
+    movement is covered.

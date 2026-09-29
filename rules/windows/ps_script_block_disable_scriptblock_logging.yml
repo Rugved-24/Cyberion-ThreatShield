@@ -1,0 +1,78 @@
+title: CT-006 - PowerShell Script Block Disabling Script Block Logging
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4406
+status: experimental
+description: >
+  Detects a PowerShell script block that writes the ScriptBlockLogging policy
+  values to zero, or resets the signature set used to validate script blocks.
+  Both are used to blind PowerShell's own logging, which is the primary
+  record of what a script actually executed.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1685/
+  - docs/detection_backlog.md
+tags:
+  - attack.defense-impairment
+  - attack.t1685
+logsource:
+  product: windows
+  service: powershell
+  category: ps_script_block
+detection:
+  selection:
+    EventID: 4104
+    Provider: 'Microsoft-Windows-PowerShell'
+    ScriptBlockText|contains: 'ScriptB'
+    ScriptBlockText|contains: 'lockLogging'
+  condition: selection
+falsepositives:
+  - Hardening scripts and onboarding automation that apply a documented PowerShell logging
+    baseline. These must be registered as approved changes rather than tuned away.
+  - Security assessment tooling that temporarily weakens logging during a controlled test
+    window.
+fields:
+  - EventID
+  - Provider
+  - ScriptBlockText
+level: critical
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1685
+x-severity:
+  level: critical
+  rationale: >
+    Critical. This is a deliberate action against a defensive control rather
+    than an artefact of normal activity, it is executed before the payload runs,
+    and it is designed to remove the evidence a responder would otherwise use.
+    The recorded script also performs a second control bypass in the same
+    block, which is why the two T1685 rules are rated differently: this one is
+    rated at the top of the scale and is treated as a response trigger.
+x-scope:
+  covered: >
+    PowerShell Operational event 4104 whose script block text contains the
+    ScriptBlockLogging setting name in any letter casing.
+  excluded: >
+    Equivalent settings written with fully concatenated strings that share no
+    contiguous literal with ScriptB, the same behaviour performed through the
+    registry rather than the policy objects, and any 4104 record that only
+    reads these values.
+x-evidence:
+  expected_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1827'
+  negative_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:42'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2877'
+  note: >
+    DS002:1827 is the declared match. DS002:42 and DS002:2877 are PowerShell
+    module logging records from the same recording and host that must not
+    match, because they are event 4103 rather than 4104 and contain no logging
+    configuration text.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    The single 4104 record in DS002 is attack activity, so the dataset offers no
+    benign comparison. Note the important logging consequence: if a script
+    reaches this point on a host where 4104 logging is already disabled, this
+    rule cannot fire, which is itself a finding about the control's placement.

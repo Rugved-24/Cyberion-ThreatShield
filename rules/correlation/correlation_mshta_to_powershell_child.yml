@@ -1,0 +1,102 @@
+title: CT-C01 - mshta Process Creating a PowerShell Child
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4501
+status: experimental
+description: >
+  Correlates a mshta.exe process creation with a later powershell.exe process
+  creation whose parent process GUID equals the mshta process GUID, on the same
+  recording and the same exact host name, within a bounded window. A script
+  host spawning an interactive interpreter is the chain that turns a document
+  or web-delivered script into a shell, and neither event is conclusive alone.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1218/005/
+  - https://attack.mitre.org/versions/v19/techniques/T1059/001/
+  - docs/detection_backlog.md
+tags:
+  - attack.stealth
+  - attack.t1218.005
+  - attack.t1059.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  parent:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\mshta.exe'
+  child:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\powershell.exe'
+  condition: parent and child
+falsepositives:
+  - Approved administrative automation that uses mshta to run a VBScript shim which in
+    turn starts a helper PowerShell process.
+fields:
+  - EventID
+  - Provider
+  - Image
+  - ProcessGuid
+  - ParentProcessGuid
+level: high
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1218.005
+    - T1059.001
+x-severity:
+  level: high
+  rationale: >
+    High. The pair establishes a parent-child relationship that neither record
+    states on its own, and in this dataset it is the boundary between the
+    initial script execution and the discovery command that follows. The window
+    is set well above the observed delay so that the rule survives normal
+    scheduling jitter rather than matching only the recorded sample.
+x-scope:
+  covered: >
+    A mshta.exe and a powershell.exe Sysmon event 1 pair, within one dataset,
+    one exact host string and a five second window, joined on the child's
+    parent process GUID matching the parent's process GUID, with both event
+    times resolved.
+  excluded: >
+    Chains longer than two processes, cross-dataset or cross-host chains, any
+    pairing that would require matching hexadecimal against decimal process
+    identifiers, and any event pair where either timestamp is unresolved.
+x-evidence:
+  expected_event_uids:
+    - 'DS001:25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32:275'
+    - 'DS001:25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32:398'
+  negative_event_uids:
+    []
+  note: >
+    DS001:275 is the parent and DS001:398 is the GUID-linked child, 0.607
+    seconds apart. The window matrix is the point of this rule's test: the
+    pairing must appear at the exact observed delay and must not appear one
+    millisecond earlier, which proves the window is enforced rather than
+    ignored. The shipped window is 5 seconds, not 0.607, so that ordinary
+    scheduling delay does not suppress the alert.
+x-correlation:
+  parent: parent
+  child: child
+  join_field: process_guid -> parent_process_guid
+  scope: same dataset, exact host string, both event times resolved
+  window_seconds: 5
+  window_tests:
+    - window_seconds: 0.606
+      expect: no match
+    - window_seconds: 0.607
+      expect: match
+    - window_seconds: 5
+      expect: match
+    - window_seconds: 60
+      expect: match
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    No benign chain of this shape exists in the recorded telemetry, so the
+    false-positive rate is unmeasured. The two boundaries that were tested and
+    held are a reversed parent and child order, which produces no match, and a
+    join on equal GUIDs instead of parent-to-parent GUIDs, which also produces
+    no match.
