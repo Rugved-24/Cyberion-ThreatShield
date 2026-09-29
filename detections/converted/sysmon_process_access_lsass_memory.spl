@@ -1,0 +1,1 @@
+EventCode=10 Provider="Microsoft-Windows-Sysmon" TargetImage="*\\lsass.exe" NOT CallTrace="*lsm.dll*" NOT CallTrace="*sysmain.dll*" | table EventCode,Provider,TargetImage,GrantedAccess,CallTrace

@@ -1,0 +1,1 @@
+EventID == 4104 and Provider =~ "Microsoft-Windows-PowerShell" and ScriptBlockText contains "lockLogging"

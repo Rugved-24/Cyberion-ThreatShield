@@ -1,0 +1,1 @@
+EventCode=1 Provider="Microsoft-Windows-Sysmon" Image="*\\powershell.exe"

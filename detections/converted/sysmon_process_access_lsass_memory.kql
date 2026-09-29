@@ -1,0 +1,1 @@
+(EventID == 10 and Provider =~ "Microsoft-Windows-Sysmon" and TargetImage endswith "\\lsass.exe") and (not(CallTrace contains "lsm.dll")) and (not(CallTrace contains "sysmain.dll"))

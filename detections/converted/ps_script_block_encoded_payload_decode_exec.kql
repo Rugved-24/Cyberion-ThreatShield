@@ -1,0 +1,1 @@
+(EventID == 4104 and Provider =~ "Microsoft-Windows-PowerShell" and ScriptBlockText contains "frombase64string") and ScriptBlockText matches regex "(?i)[|;{]\\s*iex\\b|\\binvoke-expression\\b"

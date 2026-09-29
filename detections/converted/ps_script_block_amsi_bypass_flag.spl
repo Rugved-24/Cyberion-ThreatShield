@@ -1,0 +1,1 @@
+source IN ("WinEventLog:Microsoft-Windows-PowerShell/Operational", "WinEventLog:PowerShellCore/Operational") EventCode=4104 Provider="Microsoft-Windows-PowerShell" ScriptBlockText="*InitF*" | table EventCode,Provider,ScriptBlockText

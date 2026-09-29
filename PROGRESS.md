@@ -131,8 +131,37 @@ security review and a publication redaction path.
   values were ordered by set iteration, which varies with hash randomisation, so
   the manifest did not verify against its own key.
 - SECURITY.md records the threat model, the controls, and six residual risks. It
-  states explicitly that the project is not vulnerability-free and cannot be made
-  immune to attack.
+  states explicitly that this project is not vulnerability-free, and that no amount
+  of hardening can make it immune to attack.
+
+## Four-week delivery checkpoints
+
+PRD section 13 defines four weekly checkpoints. The engagement ran on demand
+rather than to a calendar, so the weeks are mapped to phases by content and each
+exit criterion is stated as it was actually met. The mapping is deliberate: work
+was sequenced by dependency, not by date.
+
+| Week | Focus | Exit criterion as specified | Met by | Evidence |
+| --- | --- | --- | --- | --- |
+| **Week 1** | Data familiarization, dataset selection, data dictionary, initial ATT&CK technique selection, version-controlled repository | Data dictionary complete; at least 5 target techniques selected and justified | Phases 0-3, then Phase 4 | `docs/data_dictionary.md` covers 3 telemetry types with per-field meaning, type, limitation and detection relevance. `coverage/assessment.md` selected and justified **20** techniques across 11 tactics. 4 commits, `1903adf` to `5b1c028`. |
+| **Week 2** | Detection rule engineering, begin the coverage matrix | 10+ rules written, tested against datasets, and mapped on the coverage matrix | Phases 5-6 | **17** rules authored, all syntax-validated and replayed; **3** correlation rules. `coverage/matrix-v2.md` maps 21 techniques with a rule reference on every row. Commits `fbcd48c`, `77da143`, `cdb1609`, `e873dc9`. |
+| **Week 3** | Threat hunting and incident investigation, begin case reports and playbooks | 2+ hunt reports complete; at least 1 incident case report drafted | Phase 6 | **2** hunts complete, one Partially supported and one Inconclusive. **2** incident cases complete, both True Positive. **4** playbooks complete. Commit `ce55e04`. |
+| **Week 4** | Finalization: remaining rules, cases, playbooks, IOC notes, coverage matrix, executive summary, methodology, final report, presentation, internal quality review | All Section 12 deliverables complete and internally reviewed for evidence and traceability | Phases 6-7 | All 9 Section 12 deliverables present. `scripts/prd_compliance.py` is the quality gate. Commits `ff588c8`, `da34f4a`. |
+
+### Deviations from the week plan, and why
+
+- **More than 10 rules were written before hunting began.** The Phase 4 assessment
+  found only seven candidates because it read process-creation records; re-reading
+  the recorded script text produced six more. Writing them before hunting meant
+  the hunts tested genuinely uncovered techniques rather than re-confirming
+  existing rules.
+- **Both incident cases were completed in the same phase as the hunts.** The
+  findings came from rules that had already been validated, so there was no reason
+  to draft one case and leave it open.
+- **A security review and publication redaction were added in Phase 7.** This was
+  not a PRD requirement. It was added after a request to eliminate vulnerabilities,
+  and the response was to build verification rather than to assert immunity. See
+  `SECURITY.md`.
 
 ## Continuing Limitations
 

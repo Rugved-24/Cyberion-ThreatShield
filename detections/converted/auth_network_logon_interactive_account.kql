@@ -1,0 +1,1 @@
+(EventID == 4624 and Provider =~ "Microsoft-Windows-Security-Auditing" and LogonType == 3) and isnotempty(TargetUserName) and (not(TargetUserName endswith "$"))

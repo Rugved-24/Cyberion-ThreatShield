@@ -1,0 +1,744 @@
+{
+  "prd": "CDL-DET-V2",
+  "version": "2.0",
+  "audited_utc": "2026-09-29T14:18:23.479279+00:00",
+  "mandatory_pass": 85,
+  "mandatory_total": 85,
+  "optional_pass": 3,
+  "optional_total": 3,
+  "checks": [
+    {
+      "requirement": "R-2.7-01",
+      "prd": "2.7 Success Metrics",
+      "check": "rule_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "17 rules (requirement 15+)"
+    },
+    {
+      "requirement": "R-2.7-01",
+      "prd": "2.7 Success Metrics",
+      "check": "rule_has_attack_tag",
+      "status": "PASS",
+      "optional": false,
+      "detail": "17 rules each carry at least one attack.t tag"
+    },
+    {
+      "requirement": "R-2.7-01",
+      "prd": "2.7 Success Metrics",
+      "check": "rule_unique_id",
+      "status": "PASS",
+      "optional": false,
+      "detail": "17 unique ids across 17 rules"
+    },
+    {
+      "requirement": "R-2.7-02",
+      "prd": "2.7 Success Metrics",
+      "check": "technique_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "21 techniques on the matrix (requirement 20+)"
+    },
+    {
+      "requirement": "R-2.7-03",
+      "prd": "2.7 Success Metrics",
+      "check": "hunt_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "2 hunt reports (requirement 2+)"
+    },
+    {
+      "requirement": "R-2.7-03",
+      "prd": "2.7 Success Metrics",
+      "check": "hunt_has_hypothesis",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every hunt states a hypothesis"
+    },
+    {
+      "requirement": "R-2.7-03",
+      "prd": "2.7 Success Metrics",
+      "check": "hunt_has_classified_conclusion",
+      "status": "PASS",
+      "optional": false,
+      "detail": "conclusions classified in ('Confirmed', 'Inconclusive', 'Ruled out', 'Partially supported')"
+    },
+    {
+      "requirement": "R-2.7-04",
+      "prd": "2.7 Success Metrics",
+      "check": "incident_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "2 incident case reports (requirement 2+)"
+    },
+    {
+      "requirement": "R-2.7-04",
+      "prd": "2.7 Success Metrics",
+      "check": "incident_has_closure_class",
+      "status": "PASS",
+      "optional": false,
+      "detail": "closure classified as ('True positive', 'False positive', 'Benign positive')"
+    },
+    {
+      "requirement": "R-2.7-04",
+      "prd": "2.7 Success Metrics",
+      "check": "incident_has_evidence_reference",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every case cites event references"
+    },
+    {
+      "requirement": "R-2.7-05",
+      "prd": "2.7 Success Metrics",
+      "check": "all_rules_have_validation_record",
+      "status": "PASS",
+      "optional": false,
+      "detail": "17 validation records, one per rule"
+    },
+    {
+      "requirement": "R-2.7-05",
+      "prd": "2.7 Success Metrics",
+      "check": "validation_against_real_dataset",
+      "status": "PASS",
+      "optional": false,
+      "detail": "15 rules matched declared evidence in ['DS001', 'DS002']; 2 rules carry empty evidence by design (CT-014, CT-013)"
+    },
+    {
+      "requirement": "R-2.7-06",
+      "prd": "2.7 Success Metrics",
+      "check": "every_rule_has_falsepositives",
+      "status": "PASS",
+      "optional": false,
+      "detail": "17 rules document realistic benign triggers"
+    },
+    {
+      "requirement": "R-4.1-01",
+      "prd": "4.1 Log & Telemetry Familiarization",
+      "check": "telemetry_type_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "3 telemetry types documented in the data dictionary: ['sysmon', 'windows security', 'powershell']; 0 distinct providers recorded in the field profiles"
+    },
+    {
+      "requirement": "R-4.1-01",
+      "prd": "4.1 Log & Telemetry Familiarization",
+      "check": "data_dictionary_covers_three_types",
+      "status": "PASS",
+      "optional": false,
+      "detail": "sections for all 3 telemetry types; each field entry states meaning, type, limitation and detection relevance"
+    },
+    {
+      "requirement": "R-4.2-01",
+      "prd": "4.2 Detection Rule Engineering",
+      "check": "rule_has_required_fields",
+      "status": "PASS",
+      "optional": false,
+      "detail": "all rules carry 11 required fields"
+    },
+    {
+      "requirement": "R-4.2-01",
+      "prd": "4.2 Detection Rule Engineering",
+      "check": "rule_has_severity_rationale",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every rule has a written severity justification"
+    },
+    {
+      "requirement": "R-4.2-01",
+      "prd": "4.2 Detection Rule Engineering",
+      "check": "every_rule_has_falsepositives",
+      "status": "PASS",
+      "optional": false,
+      "detail": "17 rules document realistic benign triggers"
+    },
+    {
+      "requirement": "R-4.2-02",
+      "prd": "4.2 Detection Rule Engineering",
+      "check": "correlation_rule_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "3 correlation rules (requirement 3+)"
+    },
+    {
+      "requirement": "R-4.2-02",
+      "prd": "4.2 Detection Rule Engineering",
+      "check": "correlation_has_join_and_window",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every correlation rule declares parent, child, join and window"
+    },
+    {
+      "requirement": "R-4.2-02",
+      "prd": "4.2 Detection Rule Engineering",
+      "check": "correlation_window_matrix_present",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every correlation rule asserts a window-boundary matrix"
+    },
+    {
+      "requirement": "R-4.3-01",
+      "prd": "4.3 ATT&CK Mapping & Coverage",
+      "check": "matrix_uses_three_states",
+      "status": "PASS",
+      "optional": false,
+      "detail": "states used: ['Covered', 'Not Covered', 'Partially Covered']"
+    },
+    {
+      "requirement": "R-4.3-01",
+      "prd": "4.3 ATT&CK Mapping & Coverage",
+      "check": "matrix_rule_refs_resolve",
+      "status": "PASS",
+      "optional": false,
+      "detail": "17 referenced rule ids all resolve"
+    },
+    {
+      "requirement": "R-4.3-02",
+      "prd": "4.3 ATT&CK Mapping & Coverage",
+      "check": "tactic_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "11 tactics: ['Command and Control', 'Credential Access', 'Defense Impairment', 'Discovery', 'Execution', 'Impact', 'Initial Access', 'Lateral Movement', 'Persistence', 'Privilege Escalation', 'Stealth']"
+    },
+    {
+      "requirement": "R-4.3-03",
+      "prd": "4.3 ATT&CK Mapping & Coverage",
+      "check": "covered_requires_validated_rule",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every Covered technique rests on a PASS validation record"
+    },
+    {
+      "requirement": "R-4.3-03",
+      "prd": "4.3 ATT&CK Mapping & Coverage",
+      "check": "empty_evidence_cannot_be_covered",
+      "status": "PASS",
+      "optional": false,
+      "detail": "CT-013 and CT-014 have empty evidence and stay Not Covered"
+    },
+    {
+      "requirement": "R-4.4-01",
+      "prd": "4.4 Threat Hunting",
+      "check": "hunt_targets_uncovered_technique",
+      "status": "PASS",
+      "optional": false,
+      "detail": "hunt targets uncovered technique(s): ['T1021.002', 'T1071.001']"
+    },
+    {
+      "requirement": "R-4.4-02",
+      "prd": "4.4 Threat Hunting",
+      "check": "hunt_has_classified_conclusion",
+      "status": "PASS",
+      "optional": false,
+      "detail": "conclusions classified in ('Confirmed', 'Inconclusive', 'Ruled out', 'Partially supported')"
+    },
+    {
+      "requirement": "R-4.4-02",
+      "prd": "4.4 Threat Hunting",
+      "check": "hunt_records_negative_findings",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every hunt records negative or inconclusive findings"
+    },
+    {
+      "requirement": "R-4.5-01",
+      "prd": "4.5 IOC Research & Correlation",
+      "check": "ioc_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "22 IOC register entries"
+    },
+    {
+      "requirement": "R-4.5-01",
+      "prd": "4.5 IOC Research & Correlation",
+      "check": "ioc_has_required_columns",
+      "status": "PASS",
+      "optional": false,
+      "detail": "columns: ['confidence', 'detection_rule', 'first_seen_utc', 'indicator', 'last_seen_utc', 'limitations', 'operational_use', 'source_lines', 'type', 'value']"
+    },
+    {
+      "requirement": "R-4.5-01",
+      "prd": "4.5 IOC Research & Correlation",
+      "check": "ioc_has_confidence",
+      "status": "PASS",
+      "optional": false,
+      "detail": "22 entries all carry a confidence value"
+    },
+    {
+      "requirement": "R-4.5-01",
+      "prd": "4.5 IOC Research & Correlation",
+      "check": "ioc_has_operational_use",
+      "status": "PASS",
+      "optional": false,
+      "detail": "22 entries all state their operational use"
+    },
+    {
+      "requirement": "R-4.5-01",
+      "prd": "4.5 IOC Research & Correlation",
+      "check": "ioc_never_says_do_not_block_ambiguously",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every DO NOT BLOCK entry also records its reason"
+    },
+    {
+      "requirement": "R-4.6-01",
+      "prd": "4.6 Incident Investigation & Case Reporting",
+      "check": "incident_has_timeline",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every case has a timeline section"
+    },
+    {
+      "requirement": "R-4.6-01",
+      "prd": "4.6 Incident Investigation & Case Reporting",
+      "check": "incident_has_root_cause",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every case has a root cause section"
+    },
+    {
+      "requirement": "R-4.6-01",
+      "prd": "4.6 Incident Investigation & Case Reporting",
+      "check": "incident_has_impact",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every case has an impact assessment"
+    },
+    {
+      "requirement": "R-4.6-01",
+      "prd": "4.6 Incident Investigation & Case Reporting",
+      "check": "incident_has_closure_class",
+      "status": "PASS",
+      "optional": false,
+      "detail": "closure classified as ('True positive', 'False positive', 'Benign positive')"
+    },
+    {
+      "requirement": "R-4.6-02",
+      "prd": "4.6 Incident Investigation & Case Reporting",
+      "check": "incident_corroborates_two_sources",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every case cites at least two independent log sources"
+    },
+    {
+      "requirement": "R-4.6-02",
+      "prd": "4.6 Incident Investigation & Case Reporting",
+      "check": "incident_evidence_references_resolve",
+      "status": "PASS",
+      "optional": false,
+      "detail": "34 event references resolve: 0 full UIDs and 34 DSxxx:line shorthand, all inside a known dataset digest and within its record count"
+    },
+    {
+      "requirement": "R-4.7-01",
+      "prd": "4.7 Incident Response Playbooks",
+      "check": "playbook_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "4 playbooks (requirement 3+)"
+    },
+    {
+      "requirement": "R-4.7-01",
+      "prd": "4.7 Incident Response Playbooks",
+      "check": "playbook_has_required_sections",
+      "status": "PASS",
+      "optional": false,
+      "detail": "all 4 playbooks carry trigger, investigation, containment, eradication, recovery and communications"
+    },
+    {
+      "requirement": "R-4.8-01",
+      "prd": "4.8 Rule Quality & False Positive Tuning",
+      "check": "tuning_case_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "3 tuning cases (requirement 3+)"
+    },
+    {
+      "requirement": "R-4.8-01",
+      "prd": "4.8 Rule Quality & False Positive Tuning",
+      "check": "tuning_records_before_and_after",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every case records a before and an after match count"
+    },
+    {
+      "requirement": "R-4.8-01",
+      "prd": "4.8 Rule Quality & False Positive Tuning",
+      "check": "tuning_records_tradeoff",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every tuning record states the accepted trade-off"
+    },
+    {
+      "requirement": "R-4.9-01",
+      "prd": "4.9 Reporting & Executive Communication",
+      "check": "exec_summary_exists",
+      "status": "PASS",
+      "optional": false,
+      "detail": "reports/executive-summary.md"
+    },
+    {
+      "requirement": "R-4.9-01",
+      "prd": "4.9 Reporting & Executive Communication",
+      "check": "exec_summary_uses_plain_language",
+      "status": "PASS",
+      "optional": false,
+      "detail": "plain-language markers 39 vs raw jargon 4"
+    },
+    {
+      "requirement": "R-5-01",
+      "prd": "5 Deliverable Quality Standards",
+      "check": "pipeline_commands_documented",
+      "status": "PASS",
+      "optional": false,
+      "detail": "pipeline order documented for 6 stages"
+    },
+    {
+      "requirement": "R-5-01",
+      "prd": "5 Deliverable Quality Standards",
+      "check": "pipeline_runs_clean",
+      "status": "PASS",
+      "optional": false,
+      "detail": "test_all, tune and build_coverage all exit 0"
+    },
+    {
+      "requirement": "R-5-02",
+      "prd": "5 Deliverable Quality Standards",
+      "check": "evidence_references_resolve",
+      "status": "PASS",
+      "optional": false,
+      "detail": "119 event references resolve: 57 full UIDs and 62 DSxxx:line shorthand, all inside a known dataset digest and within its record count"
+    },
+    {
+      "requirement": "R-5-02",
+      "prd": "5 Deliverable Quality Standards",
+      "check": "no_unsupported_claims_flagged",
+      "status": "PASS",
+      "optional": false,
+      "detail": "10 narrative documents scanned against 7 absolute-claim phrases; none asserted"
+    },
+    {
+      "requirement": "R-5-03",
+      "prd": "5 Deliverable Quality Standards",
+      "check": "rule_has_attack_tag",
+      "status": "PASS",
+      "optional": false,
+      "detail": "17 rules each carry at least one attack.t tag"
+    },
+    {
+      "requirement": "R-5-03",
+      "prd": "5 Deliverable Quality Standards",
+      "check": "technique_ids_resolve_to_catalog",
+      "status": "PASS",
+      "optional": false,
+      "detail": "15 technique ids all resolve to the verified ATT&CK 19.2 subset"
+    },
+    {
+      "requirement": "R-5-04",
+      "prd": "5 Deliverable Quality Standards",
+      "check": "git_commit_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "11 commits"
+    },
+    {
+      "requirement": "R-5-04",
+      "prd": "5 Deliverable Quality Standards",
+      "check": "git_tracked_no_telemetry",
+      "status": "PASS",
+      "optional": false,
+      "detail": "79 tracked files, no telemetry among them"
+    },
+    {
+      "requirement": "R-6.03",
+      "prd": "6.3 Incident Investigation Workflow",
+      "check": "incident_references_playbook",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every case references a response playbook"
+    },
+    {
+      "requirement": "R-7-01",
+      "prd": "7 Reports & Documentation Deliverables",
+      "check": "final_report_exists",
+      "status": "PASS",
+      "optional": false,
+      "detail": "reports/final-technical-report.md"
+    },
+    {
+      "requirement": "R-7-01",
+      "prd": "7 Reports & Documentation Deliverables",
+      "check": "final_report_has_required_sections",
+      "status": "PASS",
+      "optional": false,
+      "detail": "all 18 required sections present"
+    },
+    {
+      "requirement": "R-7-02",
+      "prd": "7 Reports & Documentation Deliverables",
+      "check": "methodology_exists",
+      "status": "PASS",
+      "optional": false,
+      "detail": "docs/methodology.md"
+    },
+    {
+      "requirement": "R-7-02",
+      "prd": "7 Reports & Documentation Deliverables",
+      "check": "methodology_covers_required_topics",
+      "status": "PASS",
+      "optional": false,
+      "detail": "11 required topics covered"
+    },
+    {
+      "requirement": "R-7-03",
+      "prd": "7 Reports & Documentation Deliverables",
+      "check": "presentation_exists",
+      "status": "PASS",
+      "optional": false,
+      "detail": "presentation: ['deck.pptx']"
+    },
+    {
+      "requirement": "R-7-03",
+      "prd": "7 Reports & Documentation Deliverables",
+      "check": "presentation_has_slides",
+      "status": "PASS",
+      "optional": false,
+      "detail": "14 slides in deck.pptx"
+    },
+    {
+      "requirement": "R-8-01",
+      "prd": "8 Detection Rule Format Standard",
+      "check": "rule_has_required_fields",
+      "status": "PASS",
+      "optional": false,
+      "detail": "all rules carry 11 required fields"
+    },
+    {
+      "requirement": "R-8-01",
+      "prd": "8 Detection Rule Format Standard",
+      "check": "sigma_syntax_valid",
+      "status": "PASS",
+      "optional": false,
+      "detail": "sigma-cli 3.1.0 checked 17 rules"
+    },
+    {
+      "requirement": "R-9-01",
+      "prd": "9 Data Sources",
+      "check": "dataset_provenance_documented",
+      "status": "PASS",
+      "optional": false,
+      "detail": "acquisition records for DS001 and DS002 present"
+    },
+    {
+      "requirement": "R-9-01",
+      "prd": "9 Data Sources",
+      "check": "raw_hashes_match_inventory",
+      "status": "PASS",
+      "optional": false,
+      "detail": "2 raw files match their recorded SHA-256"
+    },
+    {
+      "requirement": "R-9-01",
+      "prd": "9 Data Sources",
+      "check": "licence_limitation_documented",
+      "status": "PASS",
+      "optional": false,
+      "detail": "dataset licence ambiguity is documented in docs/datasets.md and SECURITY.md"
+    },
+    {
+      "requirement": "R-10-01",
+      "prd": "10 Enterprise Constraints",
+      "check": "tuning_case_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "3 tuning cases (requirement 3+)"
+    },
+    {
+      "requirement": "R-10-01",
+      "prd": "10 Enterprise Constraints",
+      "check": "rules_state_precision_limitations",
+      "status": "PASS",
+      "optional": false,
+      "detail": "every rule states its false-positive limitation"
+    },
+    {
+      "requirement": "R-12-01",
+      "prd": "12 Deliverables Checklist",
+      "check": "checklist_all_present",
+      "status": "PASS",
+      "optional": false,
+      "detail": "all 11 checklist artefacts present"
+    },
+    {
+      "requirement": "R-13-01",
+      "prd": "13 Weekly Milestones",
+      "check": "week_checkpoints_recorded",
+      "status": "PASS",
+      "optional": false,
+      "detail": "Week 1-4 exit criteria recorded in PROGRESS.md"
+    },
+    {
+      "requirement": "R-14-01",
+      "prd": "14 Evaluation Rubric",
+      "check": "quality_review_against_rubric",
+      "status": "PASS",
+      "optional": false,
+      "detail": "all 8 PRD section 14 dimensions reviewed, 4 of them carrying an explicit deduction"
+    },
+    {
+      "requirement": "R-15-01",
+      "prd": "15 Tools Required",
+      "check": "environment_documented",
+      "status": "PASS",
+      "optional": false,
+      "detail": "host, storage, python, tools, virtualization and office recorded"
+    },
+    {
+      "requirement": "R-15-01",
+      "prd": "15 Tools Required",
+      "check": "python_version_ok",
+      "status": "PASS",
+      "optional": false,
+      "detail": "Python 3.12.10"
+    },
+    {
+      "requirement": "R-15-01",
+      "prd": "15 Tools Required",
+      "check": "sigma_tooling_present",
+      "status": "PASS",
+      "optional": false,
+      "detail": "sigma-cli present"
+    },
+    {
+      "requirement": "R-15-01",
+      "prd": "15 Tools Required",
+      "check": "git_present",
+      "status": "PASS",
+      "optional": false,
+      "detail": "git present"
+    },
+    {
+      "requirement": "R-11-01",
+      "prd": "11 Optional Advanced Enhancements",
+      "check": "converted_rule_count",
+      "status": "PASS",
+      "optional": true,
+      "detail": "29 converted query files"
+    },
+    {
+      "requirement": "R-11-02",
+      "prd": "11 Optional Advanced Enhancements",
+      "check": "harness_exists",
+      "status": "PASS",
+      "optional": true,
+      "detail": "scripts/test_all.py"
+    },
+    {
+      "requirement": "R-11-03",
+      "prd": "11 Optional Advanced Enhancements",
+      "check": "purple_team_plan_exists",
+      "status": "PASS",
+      "optional": true,
+      "detail": "docs/purple-team-plan.md"
+    },
+    {
+      "requirement": "R-ENV-01",
+      "prd": "Environment inspection",
+      "check": "environment_documented",
+      "status": "PASS",
+      "optional": false,
+      "detail": "host, storage, python, tools, virtualization and office recorded"
+    },
+    {
+      "requirement": "R-ENV-02",
+      "prd": "Environment inspection",
+      "check": "python_venv_isolated",
+      "status": "PASS",
+      "optional": false,
+      "detail": "isolated environment at E:\\VS Code Projects\\Cyberion-ThreatShield\\.venv"
+    },
+    {
+      "requirement": "R-ENV-03",
+      "prd": "Environment inspection",
+      "check": "environment_gaps_documented",
+      "status": "PASS",
+      "optional": false,
+      "detail": "docs/environment-gaps.md"
+    },
+    {
+      "requirement": "R-NB-01",
+      "prd": "Analysis notebooks",
+      "check": "notebook_count",
+      "status": "PASS",
+      "optional": false,
+      "detail": "5 notebooks (requirement: profiling, validation, hunting, reconstruction)"
+    },
+    {
+      "requirement": "R-NB-01",
+      "prd": "Analysis notebooks",
+      "check": "notebook_is_documented",
+      "status": "PASS",
+      "optional": false,
+      "detail": "all 5 notebooks carry purpose, method and conclusion narrative"
+    },
+    {
+      "requirement": "R-QA-01",
+      "prd": "Automated quality checks",
+      "check": "qa_checks_present",
+      "status": "PASS",
+      "optional": false,
+      "detail": "scripts/prd_compliance.py"
+    },
+    {
+      "requirement": "R-QA-01",
+      "prd": "Automated quality checks",
+      "check": "qa_runs_clean",
+      "status": "PASS",
+      "optional": false,
+      "detail": "this audit is the quality gate; its own result is the record"
+    },
+    {
+      "requirement": "R-STR-01",
+      "prd": "Repository structure",
+      "check": "structure_mapping_documented",
+      "status": "PASS",
+      "optional": false,
+      "detail": "docs/project-structure.md"
+    },
+    {
+      "requirement": "R-STR-01",
+      "prd": "Repository structure",
+      "check": "id_crosswalk_documented",
+      "status": "PASS",
+      "optional": false,
+      "detail": "crosswalk maps CT-* to DET-* and HUNT-* to TH-*"
+    }
+  ],
+  "limitations": [
+    {
+      "id": "R-4.2-03-LIM",
+      "requirement": "R-4.3-01 / R-4.6-01 partial scope",
+      "text": "Close the three evidence gaps T1547.001 Registry Run Keys / Startup Folder, T1110.003 Password Spraying and T1486 Data Encrypted for Impact.",
+      "effect": "These three techniques stay Not Covered. They cannot be demonstrated with the two selected recordings, which contain no run-key write, no event 4625 authentication failure, and no labelled encryption sequence.",
+      "reason": "Closing them would require locally generated telemetry. This host has no hypervisor, no VirtualBox or VMware, no working Docker daemon and no Hyper-V compute service, so no isolated Windows test VM can be created. The PRD and the engagement instruction both forbid running attack simulation on the user's daily-use environment, so the Atomic Red Team route is closed as well.",
+      "evidence": "docs/environment-inventory.json records hypervisor_present and platforms_on_path as absent. coverage/matrix-v2.md records the minimum dataset each gap needs.",
+      "not_fabricated": "No rule was written for these techniques. No telemetry was synthesised. They are reported as Not Covered with a stated visibility gap."
+    },
+    {
+      "id": "R-2.7-06-LIM",
+      "requirement": "R-2.7-06 / quality of false-positive review",
+      "text": "Measure the false-positive rate of every rule against a clean recording of normal business activity.",
+      "effect": "12 of 21 techniques are capped at Partially Covered rather than Covered. The coverage matrix is not overstated, and the cap is deliberate.",
+      "reason": "Both selected recordings are adversary-emulation captures. They contain no baseline of ordinary activity. Three rules were measured against attributable benign background inside the captures, which is real evidence but not a clean-environment baseline.",
+      "evidence": "evidence/tuning/benign-baseline.json states explicitly that it is not a separately collected clean baseline.",
+      "not_fabricated": "No benign baseline was invented. The measured figures come from scripts/tune.py against real records."
+    },
+    {
+      "id": "R-9-02-LIM",
+      "requirement": "R-9-01 distribution",
+      "text": "Clear redistribution terms for the selected public datasets before external publication.",
+      "effect": "The repository is not published externally. A redacted copy path exists but publication remains gated on a rights review.",
+      "reason": "The pinned upstream files carry conflicting MIT and GPL-3.0 licence labels, which is a genuine unresolved ambiguity, not a formality.",
+      "evidence": "references/OTRF-LICENSE, references/OTRF-README.md, docs/datasets.md, SECURITY.md.",
+      "not_fabricated": "No licence claim was invented or assumed."
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+source="WinEventLog:Security" EventCode IN (5140, 5145) Provider="Microsoft-Windows-Security-Auditing" NOT SubjectUserName="*$" NOT RelativeTargetName="*gpt.ini*" | table EventCode,Provider,ShareName,SubjectUserName,RelativeTargetName

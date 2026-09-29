@@ -1,0 +1,1 @@
+source="WinEventLog:Security" EventCode=4697 Provider="Microsoft-Windows-Security-Auditing" ServiceFileName="*powershell*" | table EventCode,Provider,ServiceName,ServiceFileName,ServiceAccount

@@ -1,0 +1,1 @@
+EventCode=1 Provider="Microsoft-Windows-Sysmon" Image="*\\mshta.exe" CommandLine="*vbscript:*" | table EventCode,Provider,Image,CommandLine
