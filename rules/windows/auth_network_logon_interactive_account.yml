@@ -70,16 +70,21 @@ x-evidence:
     - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:728'
   note: >
     DS002:1209 is the declared match, a type 3 logon for the named account
-    pgustavo. The six type 3 logons for the machine account MORDORDC$ on the
-    same host are the declared false positives that this rule excludes; they
-    are recorded in evidence/tuning/CT-012-false-positive.md with the before
-    and after counts.
+    pgustavo on WORKSTATION6.theshire.local. The six type 3 logons for the
+    machine account MORDORDC$ in the same recording are on a different host,
+    MORDORDC.theshire.local, at lines 289, 700, 703, 709, 726 and 3199. Those
+    host names are not merged and no same-host relationship is claimed. They are
+    the declared false positives that this rule excludes, and the before and
+    after counts are in evidence/tuning/CT-012-false-positive.md.
 x-benign-review:
   cases: []
   status: pending
   note: >
     Unlike the process rules, this rule does have a real benign comparison in
-    the recorded telemetry: six machine-account logons on the same host, which
-    the tuned logic removes completely. That is the only rule in this library
-    with both a confirmed malicious match and a measured benign result, and it
-    is the reason T1078 is the single technique scored Covered.
+    the recorded telemetry: six machine-account type 3 logons, which the tuned
+    logic removes completely while retaining the named-account match. That is
+    the only rule in this library with both a confirmed malicious match and a
+    measured benign result, and it is the reason T1078 is the single technique
+    scored Covered. The comparison population is attributed background activity
+    inside an adversary-emulation capture, not a separately collected clean
+    environment, so the measured rate is a floor rather than a client figure.

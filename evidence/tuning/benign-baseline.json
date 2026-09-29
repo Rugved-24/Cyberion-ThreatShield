@@ -1,0 +1,49 @@
+{
+  "purpose": "Comparison population for false-positive tuning.",
+  "status": "attributable background activity inside the recorded attack datasets",
+  "not_a_clean_baseline": "These recordings are adversary-emulation captures. The records listed here were attributed to ordinary Windows or vendor activity using fields present in the record itself. They are not a separately collected clean environment, they are not exhaustive, and they are not a substitute for one. A client deployment must collect its own baseline before relying on any false-positive rate in this file.",
+  "benign_groups": [
+    {
+      "group": "logon_session_manager_lsass_access",
+      "attribution": "Sysmon event 10 handles to lsass.exe opened by svchost.exe whose call trace resolves to lsm.dll, the logon session manager, or sysmain.dll, the memory compression driver. Both run on every sign-in and under memory pressure.",
+      "event_uids": [
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2466",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2467",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:3108",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:4276",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:4278",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:4332",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:4333"
+      ]
+    },
+    {
+      "group": "domain_controller_sysvol_replication",
+      "attribution": "Security 5140 and 5145 share events on the SYSVOL administrative share by the machine account MORDORDC$ for gpt.ini group policy template files. This is ordinary Group Policy replication on a domain controller.",
+      "event_uids": [
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:728",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:729",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:730"
+      ]
+    },
+    {
+      "group": "machine_account_network_logons",
+      "attribution": "Security 4624 logons of type 3 by the machine account MORDORDC$ on the domain controller MORDORDC.theshire.local. Machine logons dominate type 3 on any busy domain controller. These records are on a different host from the attack evidence and the two host names are deliberately not merged; the comparison is valid because the rule logic is host agnostic, and it is stated this way so that no same-host relationship is implied.",
+      "event_uids": [
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:289",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:700",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:703",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:709",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:726",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:3199"
+      ]
+    },
+    {
+      "group": "click_to_run_office_updater",
+      "attribution": "Sysmon event 1 creation of OfficeC2RClient.exe under the Click-to-Run shared folder, parented by svchost.exe, following a recorded scheduled task registration. Vendor update activity.",
+      "event_uids": [
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:363",
+        "DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:359"
+      ]
+    }
+  ]
+}

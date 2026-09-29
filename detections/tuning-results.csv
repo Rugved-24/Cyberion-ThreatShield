@@ -1,0 +1,4 @@
+id,title,rule,before_matches,before_benign,before_attack,after_matches,after_benign,after_attack,known_benign_suppressed,known_benign_remaining,attack_matches_lost,attack_uids_remaining,residual_benign_uids,status,record
+CT-012,Network logon by a named user account,rules/windows/auth_network_logon_interactive_account.yml,7,6,1,1,0,1,6,0,0,DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1209,none,PASS,evidence/tuning/CT-012-false-positive.md
+CT-013,Process access to LSASS by a non-system caller,rules/windows/sysmon_process_access_lsass_memory.yml,7,7,0,0,0,0,7,0,0,none,none,PASS,evidence/tuning/CT-013-false-positive.md
+CT-014,Admin or service share access by a user account,rules/windows/file_share_admin_share_remote_service_access.yml,3,3,0,0,0,0,3,0,0,none,none,PASS,evidence/tuning/CT-014-false-positive.md
