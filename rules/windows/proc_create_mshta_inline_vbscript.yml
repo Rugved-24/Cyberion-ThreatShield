@@ -1,0 +1,65 @@
+title: CT-001 - Mshta Executes Inline VBScript
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4401
+status: experimental
+description: >
+  Detects mshta.exe started with a vbscript: URL argument, which is the inline
+  Visual Basic execution path used to launch a follow-on interpreter from a
+  script host rather than from an interactive console.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1218/005/
+  - https://attack.mitre.org/versions/v19/techniques/T1059/005/
+  - docs/detection_backlog.md
+tags:
+  - attack.stealth
+  - attack.t1218.005
+  - attack.t1059.005
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_image:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\mshta.exe'
+  selection_script:
+    CommandLine|contains: 'vbscript:'
+  condition: selection_image and selection_script
+falsepositives:
+  - Approved administrative automation that runs inline VBScript through mshta.
+  - Legacy logon scripts and legacy installer wrappers.
+fields:
+  - EventID
+  - Provider
+  - Image
+  - CommandLine
+level: high
+x-attack:
+  techniques:
+    - T1218.005
+    - T1059.005
+x-scope:
+  covered: >
+    Sysmon event 1 process creation where the image is mshta.exe and the
+    command line contains a vbscript: URL argument.
+  excluded: >
+    mshta.exe launched with a local .hta or .js file, mshta executed without a
+    command line, and any mshta behaviour on hosts without Sysmon event 1.
+x-evidence:
+  expected_event_uids:
+    - 'DS001:25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32:275'
+  negative_event_uids:
+    - 'DS001:25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32:398'
+    - 'DS001:25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32:422'
+  note: >
+    DS001:275 is the declared match. DS001:398 is the GUID-linked PowerShell
+    child and DS001:422 is its conhost; both are Sysmon event 1 records on the
+    same host that must not match this rule.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    DS001 contains no mshta.exe record other than the declared match, so this
+    dataset cannot supply a benign comparison. A benign baseline is required
+    before any coverage claim; see scripts/tune.py.

@@ -37,5 +37,14 @@ Current phase: 5 - Sigma rule implementation and replay testing.
 - Host aliases and PowerShell unresolved-flag semantics remain unverified.
 - Benign comparison collection and redistribution-terms review remain pending.
 
-Next action: implement CT-001..CT-004 and replay them against the recorded telemetry.
+Next action: implement CT-002..CT-004 and replay them against the recorded telemetry.
 Phases 5-16: implementation not started.
+
+## Phase 5 Results
+
+- HUNT-002 pre-hunt commit: a85ce34.
+- rules/_template.yml: the single rule template for every detection.
+- scripts/test_all.py: one harness for syntax, replay, negatives and correlation windows.
+- CT-001 implemented and replayed: 1 match at DS001:275; 2 declared negatives held.
+- Correlation helper and window-boundary matrix validated, then removed after the smoke test.
+- Playback is restricted to the documented grammar; unsupported syntax raises.

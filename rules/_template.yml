@@ -1,0 +1,47 @@
+title: CT-XXX - Behaviour summary in imperative form
+id: 00000000-0000-4000-8000-000000000000
+status: experimental
+description: >
+  One sentence naming the observable behaviour, the telemetry it requires and
+  the scope boundary of the rule.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T0000/
+  - docs/detection_backlog.md
+tags:
+  - attack.t0000
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_image:
+    EventID: 1
+    Image|endswith: '\expected.exe'
+  selection_command:
+    CommandLine|contains: 'expected-substring'
+  condition: selection_image and selection_command
+falsepositives:
+  - Named legitimate activity that produces the same observable.
+fields:
+  - EventID
+  - Image
+  - CommandLine
+level: medium
+x-attack:
+  techniques:
+    - T0000
+x-scope:
+  covered: The exact behaviour named in the description.
+  excluded: Any adjacent behaviour not named in the description.
+x-evidence:
+  expected_event_uids: []
+  note: >
+    Filled with dataset:raw_sha256:record_locator values verified in
+    data/processed. An empty list means the rule is untested.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    Administrative or approved activity to compare against before coverage is
+    claimed. Until this is populated the rule cannot be scored Covered.
