@@ -15,3 +15,5 @@ data/private/
 *.zip
 *.7z
 *.log
+
+.venv_backup/

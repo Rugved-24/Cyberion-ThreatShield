@@ -1,6 +1,6 @@
 # Final project status report
 
-Project code **CDL-DET-V2**, PRD version 2.0. Generated 2026-09-29 by `scripts/final_status.py`.
+Project code **CDL-DET-V2**, PRD version 2.0. Generated 2026-10-20 by `scripts/final_status.py`.
 
 Every figure below is counted from a file in the repository. None is estimated.
 
@@ -13,7 +13,7 @@ Every figure below is counted from a file in the repository. None is estimated.
 | Python | 3.12.10, isolated venv = True |
 | Key packages | pandas 3.0.5, PyYAML 6.0.3, pySigma present |
 | Jupyter kernel | none |
-| Git | 11 commits, 79 tracked files, 0 remotes |
+| Git | 12 commits, 133 tracked files, 0 remotes |
 | Virtualization | hypervisor present = None, platforms = none |
 | SIEM | none installed, correct per PRD section 2.9 |
 
@@ -144,7 +144,7 @@ The three correlation rules are deliberately **not** converted. The converter fo
 | Executive summary | Met, `reports/executive-summary.md` |
 | Final technical report | Met, `reports/final-technical-report.md` |
 | Final presentation | Met, `presentation/deck.pptx` |
-| Meaningful Git history | Met, 11 commits |
+| Meaningful Git history | Met, 12 commits |
 | Reproducibility of major findings | Met, three commands regenerate every figure |
 | Human-readable requirements matrix | Met, `PROJECT_REQUIREMENTS.md` plus CSV and JSON |
 | Automated quality checks | Met, `scripts/prd_compliance.py` |
