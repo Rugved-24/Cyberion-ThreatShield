@@ -18,7 +18,8 @@ def download(dataset):
     meta_path = ROOT / f"docs/{dataset}-acquisition.json"
     meta = json.loads(meta_path.read_text(encoding="utf-8-sig"))
     url = meta["download_url"]
-    if urlparse(url).hostname != ALLOWED_HOST:
+    parsed = urlparse(url)
+    if parsed.scheme != "https" or parsed.hostname != ALLOWED_HOST or parsed.port is not None:
         raise ValueError(f"{dataset}: unapproved download host")
 
     target = (ROOT / meta["archive"]).resolve()
@@ -30,7 +31,8 @@ def download(dataset):
         payload = target.read_bytes()
     else:
         request = Request(url, headers={"User-Agent": "Cyberion-ThreatShield/1.0"})
-        with urlopen(request, timeout=60) as response:  # noqa: S310 - host is allowlisted
+        # Exact HTTPS origin is validated above; redirects are rejected below.
+        with urlopen(request, timeout=60) as response:  # nosec B310
             if response.geturl() != url:
                 raise ValueError(f"{dataset}: redirects are not accepted")
             payload = response.read(MAX_ARCHIVE_BYTES + 1)

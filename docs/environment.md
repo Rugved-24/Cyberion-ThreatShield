@@ -5,9 +5,9 @@ Python: 3.12.10, project-local .venv
 Git: 2.55.0.windows.4
 
 Validated packages:
-- sigma-cli 3.1.0
+- sigma-cli 4.0.0
 - pandas 3.0.5
-- jupyterlab 4.6.3
+- jupyterlab 4.6.5
 - pytest 9.1.1
 
 Checks passed: pip dependency consistency, pandas/PyYAML/pySigma

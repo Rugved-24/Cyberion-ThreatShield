@@ -21,7 +21,9 @@ jobs:
           cache: pip
           cache-dependency-path: requirements.lock.txt
       - name: Install hash-locked dependencies
-        run: python -m pip install --require-hashes -r requirements.lock.txt
+        run: |
+          python -m pip install --require-hashes -r requirements.lock.txt
+          python -m pip install pip-audit==2.10.1 bandit==1.9.4
       - name: Acquire and verify public telemetry
         run: |
           python scripts/bootstrap_datasets.py
@@ -36,3 +38,7 @@ jobs:
           python scripts/test_all.py
           python scripts/prd_compliance.py
           python scripts/security_review.py
+          # pySigma requires diskcache 5.6.3; PYSEC-2026-2447 has no fixed release.
+          # The residual local-cache risk is documented in SECURITY.md (R1).
+          python -m pip_audit --ignore-vuln PYSEC-2026-2447 -r requirements.lock.txt
+          python -m bandit -q -ll -r scripts dashboard

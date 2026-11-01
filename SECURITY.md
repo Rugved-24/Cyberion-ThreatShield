@@ -51,9 +51,9 @@ the harness itself must never be tricked into treating that input as a command.
 | C2 | Every script that reads raw telemetry verifies its SHA-256 **before** reading | PASS |
 | C3 | Committed evidence writes are restricted to the documented `docs/DSxxx-*.json` set | PASS |
 | C4 | YAML parsed with `safe_load` only; no `shell=True` anywhere | PASS |
-| C5 | No credentials, tokens or key material committed | PASS, 75 tracked files scanned |
+| C5 | No credentials, tokens or key material committed | PASS, all tracked publishable files scanned |
 | C6 | Telemetry directories and binary event files are not tracked by git | PASS |
-| C7 | Dependencies are version-pinned | **WARN** — pinned but not hash-pinned, see R1 |
+| C7 | Dependencies are version-pinned and hash-locked | PASS; both lock files are installed with `--require-hashes` |
 | C8 | Caller-supplied paths and archive members are confined to their permitted directory | PASS |
 | C9 | No byte-order marks, zero-width or bidirectional characters in committed artefacts | PASS |
 
@@ -75,20 +75,23 @@ Stated plainly, because a risk register with nothing in it is not a risk registe
 
 | ID | Risk | Severity | Why it is not fixed here | Action to close it |
 | --- | --- | --- | --- | --- |
-| R1 | **Dependency substitution.** `requirements.txt` pins 104 versions but not their content hashes | Medium | Generating hashes requires downloading every artifact from PyPI, which needs network access this environment does not have | `pip download -r requirements.txt -d hashes/` then `pip install --require-hashes -r requirements.txt` |
+| R1 | **Unfixed transitive advisory.** pySigma 2.0.1 requires `diskcache==5.6.3`, which is affected by PYSEC-2026-2447 | Low in this repository | PyPI has no fixed diskcache release as of 1 November 2026. ThreatShield uses the cache locally with project-generated keys; it does not expose a shared cache service or accept a user-controlled cache directory | Upgrade when a fixed diskcache/pySigma release is available. CI ignores only this named advisory and audits every other dependency |
 | R2 | **Hostile rule content.** Rule files are data evaluated by the harness; a catastrophic-backtracking regex in a rule would hang it | Low | A rule is reviewed code, and this project's rules are its own output. ReDoS hardening would add a dependency and slow every replay | Bound the evaluation, or treat `rules/` as code and require review. Note it in the contribution path |
 | R3 | **Raw telemetry on disk.** `data/raw/` holds the full recordings in clear text | Low, environmental | Out of scope: the recordings are the evidence and must be local to be analysable | Full-disk or container encryption on the analyst workstation |
 | R4 | **Redaction is one-way by design.** If the redaction salt is lost, the mapping cannot be recovered | Low, by design | Reversible redaction is defeated by anyone holding the output | Store the salt in a password manager, not in the repository |
 | R5 | **No independent review.** Every rule, figure and conclusion was produced and checked by the same person | Medium, process | A single-analyst engagement | Peer review of at least the Covered technique and the two incident closures |
 | R6 | **Redacted copies can drift.** A sanitised copy is a snapshot; the repository can move afterwards | Low | Inherent to copying | Record the source commit in the redacted copy. Not yet implemented |
 
-## Publishing a redacted copy
+## Publishing and optional redaction
 
-The recordings are public datasets with unresolved licence terms
-(`references/OTRF-LICENSE` carries conflicting MIT and GPL-3.0 labels), and the
-written reports contain host names, account names and internal addresses from the
-lab network. Both are reasons to publish a redacted copy rather than the
-repository.
+Raw recordings are excluded from Git and are downloaded from a pinned public OTRF
+commit only when the bootstrap script is run. The exact upstream LICENSE at that
+commit states MIT; it is retained in `references/OTRF-LICENSE`. Generated reports
+contain public research-lab host names, accounts and internal addresses because
+they are part of the reproducible evidence chain—not live organizational data.
+
+For an environment that requires stricter disclosure controls, create a redacted
+copy with:
 
 ```powershell
 $env:CYBERION_REDACTION_KEY = "<a long random value>"
