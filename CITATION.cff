@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you reference Cyberion ThreatShield, cite the repository and version used."
+title: "Cyberion ThreatShield"
+type: software
+abstract: >-
+  An evidence-driven defensive cybersecurity project connecting Sigma rules,
+  public telemetry replay, ATT&CK coverage, tuning, threat hunting, incident
+  case studies and reproducible reporting.
+authors:
+  - family-names: "Londhe"
+    given-names: "Rigved"
+repository-code: "https://github.com/Rugved-24/Cyberion-ThreatShield"
+version: "1.0.0"
+date-released: "2026-11-01"
+license: "NOASSERTION"
