@@ -1,0 +1,1 @@
+EventID == 1 and Provider =~ "Microsoft-Windows-Sysmon" and Image endswith "\\whoami.exe" and ParentImage endswith "\\powershell.exe"

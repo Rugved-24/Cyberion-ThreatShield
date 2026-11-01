@@ -1,0 +1,81 @@
+title: CT-005 - Command Shell Used to Launch PowerShell in the Background
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4405
+status: experimental
+description: >
+  Detects cmd.exe invoked with the /C start /b launcher pattern to hand off
+  execution to PowerShell. The command shell is used only as a dispatcher
+  that returns control to its own caller, so the console never becomes
+  interactive and nothing appears on screen for an analyst or a user to see.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1059/003/
+  - docs/detection_backlog.md
+tags:
+  - attack.execution
+  - attack.t1059.003
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_image:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\cmd.exe'
+  selection_dispatch:
+    CommandLine|contains: '/C start /b'
+    CommandLine|contains: 'powershell'
+  condition: selection_image and selection_dispatch
+falsepositives:
+  - Batch files and scheduled tasks that use start /b to launch a long-running maintenance
+    script without holding the console open.
+  - Remote execution frameworks such as WMI, PsExec-style launchers and management agents
+    that use cmd.exe purely as a non-interactive dispatcher.
+fields:
+  - EventID
+  - Provider
+  - Image
+  - CommandLine
+level: high
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1059.003
+x-severity:
+  level: high
+  rationale: >
+    High. The combination of a non-interactive background hand-off and a
+    PowerShell target is rarely how a person works interactively, and the
+    pattern removes any console evidence from the host. It is rated at the same
+    level as CT-002 because in this dataset the two rules describe two views
+    of the same dispatcher, and either one alone would be worth investigating.
+x-scope:
+  covered: >
+    Sysmon event 1 process creation where the image is cmd.exe and the command
+    line contains both the /C start /b dispatch pattern and a reference to
+    powershell.
+  excluded: >
+    Interactive cmd.exe sessions, cmd.exe launching non-PowerShell payloads,
+    the same dispatcher pattern expressed through a 4697 service installation
+    rather than a process creation, and the pattern written with a different
+    start switch such as /MIN.
+x-evidence:
+  expected_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1057'
+  negative_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1073'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2901'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:363'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2469'
+  note: >
+    DS002:1057 is the declared match. DS002:1073 and DS002:2901 are the
+    PowerShell and whoami processes that follow it and must not match, since
+    neither is cmd.exe. DS002:363 and DS002:2469 are the two remaining process
+    creations in the dataset.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    No benign use of this dispatcher pattern is recorded in the telemetry. The
+    remote execution framework family named above is a realistic benign source
+    and must be characterised in a clean environment.

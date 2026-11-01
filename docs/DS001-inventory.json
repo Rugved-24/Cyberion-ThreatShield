@@ -1,0 +1,17 @@
+{
+  "dataset_id": "DS001",
+  "file": "data/raw/DS001/cmd_mshta_vbscript_execute_psh_2020-10-2202580804.json",
+  "bytes": 1673900,
+  "sha256": "25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32",
+  "records": 1127,
+  "Channel": {
+    "Security": 233,
+    "Microsoft-Windows-Sysmon/Operational": 892,
+    "System": 2
+  },
+  "SourceName": {
+    "Microsoft-Windows-Eventlog": 3,
+    "Microsoft-Windows-Security-Auditing": 232,
+    "Microsoft-Windows-Sysmon": 892
+  }
+}

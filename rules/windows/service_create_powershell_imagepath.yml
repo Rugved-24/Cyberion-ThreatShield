@@ -1,0 +1,79 @@
+title: CT-011 - Windows Service Installed With a PowerShell Command Line
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b440b
+status: experimental
+description: >
+  Detects a Security 4697 service installation whose binary path contains a
+  reference to PowerShell. A service whose image path is a command interpreter
+  is not a service in any normal sense: it exists to run a command line
+  automatically, at boot or on demand, with a machine-wide account.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1543/003/
+  - docs/detection_backlog.md
+tags:
+  - attack.persistence
+  - attack.privilege-escalation
+  - attack.t1543.003
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4697
+    Provider: 'Microsoft-Windows-Security-Auditing'
+    ServiceFileName|contains: 'powershell'
+  condition: selection
+falsepositives:
+  - Vendor installers and management agents that register a helper service whose image
+    path launches a PowerShell script. Legitimate but unusual, and each vendor should be
+    identified explicitly.
+  - Legacy line-of-business software that wraps a script in a service for scheduling.
+fields:
+  - EventID
+  - Provider
+  - ServiceName
+  - ServiceFileName
+  - ServiceAccount
+level: critical
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1543.003
+x-severity:
+  level: critical
+  rationale: >
+    Critical. The observable establishes both persistence and privilege
+    context in one record: the service will start without anyone being logged
+    on, and in this instance it is registered to run as LocalSystem with a
+    demand start. The rating reflects the durable, privileged foothold that the
+    record itself creates, which is why it is not folded into CT-003 even
+    though both rules observe the same intrusion.
+x-scope:
+  covered: >
+    Security Auditing event 4697 whose service binary path contains a reference
+    to powershell, in any letter casing.
+  excluded: >
+    Services whose binary path is a real executable, service modification
+    rather than installation, and service events in recordings where 4697 is
+    not collected.
+x-evidence:
+  expected_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1213'
+  negative_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1209'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:728'
+  note: >
+    DS002:1213 is the declared match: service name Updater, demand start type,
+    LocalSystem account, and a binary path that dispatches to PowerShell.
+    DS002:1209 and DS002:728 are other Security Auditing records from the same
+    host and must not match.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    No benign service installation with a PowerShell image path is recorded.
+    The significant limitation is that 4697 carries no resolved event time in
+    this dataset, so this rule cannot be time-joined to the Sysmon process
+    events that prove what the service actually ran. The association in this
+    report rests on the identical command text, not on a timestamp.

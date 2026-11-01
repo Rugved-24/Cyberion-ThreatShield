@@ -1,0 +1,102 @@
+title: CT-C03 - Encoded PowerShell Process Creating whoami
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4503
+status: experimental
+description: >
+  Correlates the encoded-command PowerShell process with a later whoami.exe
+  process creation, joined on the process GUID, on the same recording and exact
+  host, within a thirty second window. The pair shows that the concealed
+  script reached the account discovery stage, and the thirty second window is
+  required because the observed delay in this dataset is 22.175 seconds.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1059/001/
+  - https://attack.mitre.org/versions/v19/techniques/T1033/
+  - docs/detection_backlog.md
+tags:
+  - attack.execution
+  - attack.discovery
+  - attack.t1059.001
+  - attack.t1033
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  parent:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\powershell.exe'
+    CommandLine|re: '(?i)-(e|ec|enc|enco|encod|encode|encoded|encodedcommand)\s+[A-Za-z0-9+/=]{20,}'
+  child:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\whoami.exe'
+  condition: parent and child
+falsepositives:
+  - Post-deployment verification scripts that confirm which account an encoded
+    configuration payload is running as.
+fields:
+  - EventID
+  - Provider
+  - Image
+  - CommandLine
+  - ProcessGuid
+  - ParentProcessGuid
+level: high
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1059.001
+    - T1033
+x-severity:
+  level: high
+  rationale: >
+    High. It confirms progression from concealed execution to account
+    discovery, which is the point at which an operator is establishing what
+    they hold. It is rated below CT-C02 because the privilege context is
+    inherited rather than proven by this pair alone: this rule shows the
+    sequence, and CT-C02 shows the service account that gave it its weight.
+x-scope:
+  covered: >
+    An encoded-command powershell.exe and a later whoami.exe Sysmon event 1
+    pair, within one dataset, one exact host string and a thirty second window,
+    joined on the child's parent process GUID matching the parent's process
+    GUID, with both event times resolved.
+  excluded: >
+    whoami launched by a non-encoded PowerShell, whoami launched interactively,
+    chains longer than two processes, and any pair where either timestamp is
+    unresolved.
+x-evidence:
+  expected_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1073'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2901'
+  negative_event_uids:
+    []
+  note: >
+    DS002:1073 is the parent and DS002:2901 is the GUID-linked child, 22.175
+    seconds apart. This delay is an order of magnitude larger than the other two
+    correlations and is the reason the window is thirty seconds rather than
+    five. The matrix records the boundary at the observed value so that a
+    regression in the join logic would be caught, and the honest limitation is
+    that a single sample does not establish a typical delay.
+x-correlation:
+  parent: parent
+  child: child
+  join_field: process_guid -> parent_process_guid
+  scope: same dataset, exact host string, both event times resolved
+  window_seconds: 30
+  window_tests:
+    - window_seconds: 22.174
+      expect: no match
+    - window_seconds: 22.175
+      expect: match
+    - window_seconds: 30
+      expect: match
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    No benign chain of this shape is recorded. The narrow filter on the parent
+    is deliberate: requiring the encoded-command argument keeps this rule from
+    matching every PowerShell that happens to run whoami, which is the most
+    likely benign pattern.

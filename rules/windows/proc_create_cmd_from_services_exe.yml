@@ -1,0 +1,77 @@
+title: CT-003 - Command Shell Created Directly by the Service Control Manager
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4403
+status: experimental
+description: >
+  Detects cmd.exe whose recorded parent is services.exe, the Service Control
+  Manager host. A command shell appearing directly under a service host is
+  not a normal Windows service behaviour and is the execution signature of a
+  service whose binary path launches a shell.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1569/002/
+  - docs/detection_backlog.md
+tags:
+  - attack.execution
+  - attack.t1569.002
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\cmd.exe'
+    ParentImage|endswith: '\services.exe'
+  condition: selection
+falsepositives:
+  - Installer and updater products that legitimately ship a batch wrapper executed as a
+    service action, for example a custom action invoked by an MSI package.
+  - Backup, monitoring and patch agents whose service binary path launches a command shell
+    to run a maintenance script.
+fields:
+  - EventID
+  - Provider
+  - Image
+  - ParentImage
+level: high
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1569.002
+x-severity:
+  level: high
+  rationale: >
+    High. The parent is a service host, which places the shell outside any
+    interactive session and gives the resulting process the service account's
+    privileges. In this dataset the same chain continues into encoded
+    PowerShell, so the event is an early and reliable pivot point for scoping
+    the whole intrusion.
+x-scope:
+  covered: >
+    Sysmon event 1 process creation where the image is cmd.exe and the parent
+    image is services.exe.
+  excluded: >
+    Command shells started by any parent other than services.exe, shells
+    observed only through 4688, and service installations themselves, which are
+    covered separately by CT-011.
+x-evidence:
+  expected_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1057'
+  negative_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1073'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2901'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:363'
+  note: >
+    DS002:1073 is the resulting PowerShell child and DS002:2901 is the whoami
+    process; both must be rejected because their parent is not services.exe.
+    DS002:363 is the Click-to-Run Office updater, a genuine background process
+    that is correctly excluded.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    No benign service-launched command shell exists in the recorded telemetry.
+    The single cmd.exe record in DS002 is the declared attack match, so a clean
+    environment is required to establish the false-positive rate for legitimate
+    service wrappers.

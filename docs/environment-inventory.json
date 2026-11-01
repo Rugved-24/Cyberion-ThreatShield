@@ -1,0 +1,96 @@
+{
+  "captured_utc": "2026-09-29T13:51:28.787920+00:00",
+  "host": {
+    "os": "Windows",
+    "os_release": "11",
+    "os_version": "10.0.26100",
+    "architecture": "AMD64",
+    "processor": "AMD64 Family 23 Model 96 Stepping 1, AuthenticAMD",
+    "cpu_logical_cores": 12,
+    "memory": {
+      "total_bytes": 16495681536,
+      "available_bytes": 5630611456
+    },
+    "hostname": "RigsPavilion"
+  },
+  "storage": [
+    {
+      "volume": "C:\\",
+      "total_bytes": 213837148160,
+      "free_bytes": 69991763968
+    },
+    {
+      "volume": "D:\\",
+      "total_bytes": 296416702464,
+      "free_bytes": 59688325120
+    },
+    {
+      "volume": "E:\\",
+      "total_bytes": 512092008448,
+      "free_bytes": 259773722624
+    }
+  ],
+  "python": {
+    "interpreter": "E:\\VS Code Projects\\Cyberion-ThreatShield\\.venv\\Scripts\\python.exe",
+    "version": "3.12.10",
+    "implementation": "CPython",
+    "in_virtualenv": true,
+    "packages": {
+      "pandas": "3.0.5",
+      "PyYAML": "6.0.3",
+      "numpy": "2.5.3",
+      "sigma": "present",
+      "matplotlib": null,
+      "openpyxl": null,
+      "jupyterlab": "4.6.3",
+      "ipykernel": "7.3.0",
+      "pytest": "9.1.1"
+    },
+    "jupyter_kernels": []
+  },
+  "tools_on_path": {
+    "git": {
+      "path": "C:\\Program Files\\Git\\cmd\\git.EXE",
+      "version": "git version 2.55.0.windows.4"
+    },
+    "powershell": {
+      "path": "C:\\windows\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE",
+      "version": null
+    },
+    "code": {
+      "path": "E:\\VS Code\\app\\code.EXE",
+      "version": null
+    },
+    "py": {
+      "path": "C:\\windows\\py.EXE",
+      "version": "Python 3.12.10"
+    }
+  },
+  "powershell_editions": {
+    "windows_powershell": {
+      "path": "C:\\windows\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE",
+      "version": "5.1.26100.9549"
+    }
+  },
+  "virtualization": {
+    "hypervisor_present": null,
+    "hypervisor_feature_registry": null,
+    "vmware_service_present": false,
+    "hyper_v_enabled": false,
+    "platforms_on_path": [],
+    "system_manufacturer": "HP",
+    "system_model": "HP Pavilion Gaming Laptop 15-ec1xxx"
+  },
+  "office": {
+    "excel_installed": true,
+    "powerpoint_installed": true,
+    "word_installed": true,
+    "libreoffice_on_path": null
+  },
+  "repository": {
+    "path": "E:\\VS Code Projects\\Cyberion-ThreatShield",
+    "git": true,
+    "remotes": [],
+    "commits": 11
+  }
+}

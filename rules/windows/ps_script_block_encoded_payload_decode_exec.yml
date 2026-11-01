@@ -1,0 +1,81 @@
+title: CT-008 - PowerShell Decoding an Embedded Payload and Executing It In Memory
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4408
+status: experimental
+description: >
+  Detects a script block that decodes a base64 string, applies a symmetric
+  key schedule to the result and passes the output to Invoke-Expression. The
+  two halves are what matter: decoding on its own is common in installers,
+  but decoding followed by in-memory execution is a fileless payload load.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1027/010/
+  - https://attack.mitre.org/versions/v19/techniques/T1140/
+  - docs/detection_backlog.md
+tags:
+  - attack.stealth
+  - attack.t1027.010
+  - attack.t1140
+logsource:
+  product: windows
+  service: powershell
+  category: ps_script_block
+detection:
+  selection_decode:
+    EventID: 4104
+    Provider: 'Microsoft-Windows-PowerShell'
+    ScriptBlockText|contains: 'frombase64string'
+  selection_execute:
+    ScriptBlockText|re: '(?i)[|;{]\s*iex\b|\binvoke-expression\b'
+  condition: selection_decode and selection_execute
+falsepositives:
+  - Application installers and configuration-management tooling that ship an encoded
+    payload and evaluate it in memory to avoid writing an executable to disk.
+  - Blue-team test harnesses and payload-deobfuscation utilities used during detection
+    engineering.
+fields:
+  - EventID
+  - Provider
+  - ScriptBlockText
+level: high
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1027.010
+    - T1140
+x-severity:
+  level: high
+  rationale: >
+    High. The combination is rated above either half alone. Decoding is routine
+    in software deployment, and the recorded script shows both the obfuscated
+    casing and the runtime key schedule, but the combination means the payload
+    never exists as a file that could be scanned, blocked or recovered later.
+x-scope:
+  covered: >
+    PowerShell Operational event 4104 whose script block text contains a base64
+    decode call and an in-memory execution call, in any letter casing.
+  excluded: >
+    Decoding without subsequent execution, execution without decoding, the
+    documented fragment-construction variant that rebuilds the decode function
+    name from separate string parts, and behaviour in script blocks that are
+    never logged because 4104 logging was disabled beforehand.
+x-evidence:
+  expected_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1827'
+  negative_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:42'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:2877'
+  note: >
+    DS002:1827 is the declared match. It obfuscates the decode function name by
+    mixing letter case, which is why the content comparison is case
+    insensitive; the declaration that the comparison must be case insensitive is
+    the reason this rule would still fire. DS002:2877 contains
+    Invoke-Expression but performs no base64 decode, and is correctly rejected.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    The telemetry offers no benign comparison. Two important limitations are
+    recorded rather than hidden: a documented adversary variant builds the
+    function name from separate string parts, which this rule would miss, and a
+    host with 4104 logging disabled produces no record at all for this rule.

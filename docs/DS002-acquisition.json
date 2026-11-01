@@ -1,0 +1,10 @@
+{
+    "dataset_id":  "DS002",
+    "provider":  "OTRF",
+    "scenario":  "Empire Invoke PsExec",
+    "download_url":  "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/lateral_movement/host/empire_psexec_dcerpc_tcp_svcctl.zip",
+    "acquired_utc":  "2026-09-17T07:55:24.0614077Z",
+    "archive":  "data/raw/DS002/empire_psexec_dcerpc_tcp_svcctl.zip",
+    "bytes":  656179,
+    "sha256":  "8F40E7FC86BBBF31EBD50B3BA537CF0F4378392AE3E74DE84BEE00AEB0DE1FA5"
+}

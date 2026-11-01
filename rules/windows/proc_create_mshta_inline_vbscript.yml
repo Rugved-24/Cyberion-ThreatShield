@@ -1,0 +1,76 @@
+title: CT-001 - Mshta Executes Inline VBScript
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4401
+status: experimental
+description: >
+  Detects mshta.exe started with a vbscript: URL argument, which is the inline
+  Visual Basic execution path used to launch a follow-on interpreter from a
+  script host rather than from an interactive console.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1059/005/
+  - https://attack.mitre.org/versions/v19/techniques/T1218/005/
+  - docs/detection_backlog.md
+tags:
+  - attack.stealth
+  - attack.t1218.005
+  - attack.t1059.005
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_image:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\mshta.exe'
+  selection_script:
+    CommandLine|contains: 'vbscript:'
+  condition: selection_image and selection_script
+falsepositives:
+  - Approved administrative automation that runs inline VBScript through mshta.
+  - Legacy logon scripts and legacy installer wrappers.
+fields:
+  - EventID
+  - Provider
+  - Image
+  - CommandLine
+level: high
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1218.005
+    - T1059.005
+x-severity:
+  level: high
+  rationale: >
+    High. The combination of a signed Microsoft binary and a script URL argument
+    is the documented way to run Visual Basic without leaving a script file on
+    disk, and in this dataset the same process then created a PowerShell child,
+    so the event is the boundary between delivery and interactive access rather
+    than an isolated curiosity.
+x-scope:
+  covered: >
+    Sysmon event 1 process creation where the image is mshta.exe and the command
+    line contains a vbscript: URL argument.
+  excluded: >
+    mshta.exe launched with a local .hta or .js file, mshta executed without a
+    command line, and any mshta behaviour on hosts without Sysmon event 1.
+x-evidence:
+  expected_event_uids:
+    - 'DS001:25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32:275'
+  negative_event_uids:
+    - 'DS001:25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32:398'
+    - 'DS001:25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32:422'
+  note: >
+    DS001:275 is the declared match. DS001:398 is the GUID-linked PowerShell
+    child and DS001:422 is its conhost; both are Sysmon event 1 records on the
+    same host that must not match this rule, and both held.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    DS001 contains no mshta.exe record other than the declared match, so this
+    dataset cannot supply a benign comparison. The rule is scored Partially
+    Covered for exactly that reason. A clean environment is required before any
+    false-positive claim, and the inline-VBScript case is the one most likely to
+    appear in approved legacy automation.

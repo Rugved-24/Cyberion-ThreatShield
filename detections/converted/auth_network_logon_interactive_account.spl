@@ -1,0 +1,1 @@
+source="WinEventLog:Security" EventCode=4624 Provider="Microsoft-Windows-Security-Auditing" LogonType=3 TargetUserName=* NOT TargetUserName="*$" | table EventCode,Provider,LogonType,TargetUserName

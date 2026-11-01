@@ -1,0 +1,1 @@
+EventID == 4697 and Provider =~ "Microsoft-Windows-Security-Auditing" and ServiceFileName contains "powershell"

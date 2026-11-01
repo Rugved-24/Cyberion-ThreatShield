@@ -1,0 +1,43 @@
+{
+  "dataset_id": "DS001",
+  "hosts": {
+    "WORKSTATION5": 1127
+  },
+  "ranges": {
+    "@timestamp": {
+      "count": 1127,
+      "first": "2020-10-22T02:57:55.601000+00:00",
+      "last": "2020-10-22T02:58:08.695000+00:00"
+    },
+    "TimeCreated": {
+      "count": 1127,
+      "first": "2020-10-22T02:57:55.601000+00:00",
+      "last": "2020-10-22T02:58:08.695000+00:00"
+    },
+    "UtcTime": {
+      "count": 892,
+      "first": "2020-10-22T06:57:55.600000+00:00",
+      "last": "2020-10-22T06:58:08.694000+00:00"
+    }
+  },
+  "paired_differences_seconds": {
+    "@timestamp - UtcTime": {
+      "WORKSTATION5": {
+        "count": 892,
+        "min": -14400.0,
+        "median": -14399.987,
+        "max": -14399.489
+      }
+    },
+    "TimeCreated - UtcTime": {
+      "WORKSTATION5": {
+        "count": 892,
+        "min": -14400.0,
+        "median": -14399.987,
+        "max": -14399.489
+      }
+    }
+  },
+  "note": "Ranges are per field; wall-clock differences do not establish timezones.",
+  "verified_sha256": "25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32"
+}

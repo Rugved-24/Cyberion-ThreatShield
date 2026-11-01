@@ -1,0 +1,77 @@
+title: CT-010 - PowerShell Enumerating the Sysmon Service
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b440a
+status: experimental
+description: >
+  Detects a PowerShell process whose command line queries a named endpoint
+  protection or monitoring service by name. Naming a specific security
+  product is a stronger signal than generic service enumeration, because
+  inventory scripts rarely ask about one particular product from a shell.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1518/001/
+  - docs/detection_backlog.md
+tags:
+  - attack.discovery
+  - attack.t1518.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains: 'Get-Service'
+    CommandLine|contains: 'sysmon'
+  condition: selection
+falsepositives:
+  - Change-management verification that confirms endpoint protection is running after an
+    agent deployment, and monitoring checks that confirm the sensor is present.
+  - Support scripts that check for the Sysmon driver as part of a troubleshooting
+    workflow.
+fields:
+  - EventID
+  - Provider
+  - Image
+  - CommandLine
+level: high
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1518.001
+x-severity:
+  level: high
+  rationale: >
+    High. In this dataset the query is issued by a process that was itself
+    launched by mshta, so the same command line is simultaneously a discovery
+    action and evidence of the chain that produced it. The rule is written to
+    key on the named product as well as the cmdlet, which keeps the
+    false-positive rate far lower than a rule matching every Get-Service call.
+x-scope:
+  covered: >
+    Sysmon event 1 process creation where the image is powershell.exe and the
+    command line contains both a Get-Service call and a reference to the
+    Sysmon product.
+  excluded: >
+    Generic service enumeration that does not name a product, discovery of this
+    kind performed inside script text rather than on the command line, and
+    PowerShell hosted by a management agent.
+x-evidence:
+  expected_event_uids:
+    - 'DS001:25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32:398'
+  negative_event_uids:
+    - 'DS001:25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32:275'
+    - 'DS001:25AA24B5F631F19AC23F64DB116C23E632295FB5F59040E966FA47E7758B2A32:422'
+  note: >
+    DS001:398 is the declared match. DS001:275 is its mshta parent and
+    DS001:422 is the conhost it created; neither is powershell.exe with a
+    Get-Service argument, so both must be rejected.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    The dataset records this query exactly once, in attack activity. The
+    cmdlet-plus-product pairing was chosen specifically to limit benign
+    matches, but the real false-positive rate is still unmeasured because no
+    clean environment has been profiled.

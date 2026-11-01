@@ -1,0 +1,77 @@
+{
+  "dataset_id": "DS002",
+  "hosts": {
+    "WORKSTATION6.theshire.local": 2906,
+    "WORKSTATION5.theshire.local": 1105,
+    "WORKSTATION6": 176,
+    "MORDORDC.theshire.local": 161
+  },
+  "ranges": {
+    "@timestamp": {
+      "count": 4348,
+      "first": "2020-09-20T16:16:09.362000+00:00",
+      "last": "2020-09-20T16:18:21.491000+00:00"
+    },
+    "UtcTime": {
+      "count": 2941,
+      "first": "2020-09-20T16:16:06.470000+00:00",
+      "last": "2020-09-20T16:18:20.199000+00:00"
+    },
+    "EventReceivedTime": {
+      "count": 4348,
+      "first": "2020-09-20T12:16:09",
+      "last": "2020-09-20T12:18:21"
+    },
+    "EventTime": {
+      "count": 4348,
+      "first": "2020-09-20T12:16:06",
+      "last": "2020-09-20T12:18:20"
+    }
+  },
+  "paired_differences_seconds": {
+    "@timestamp - UtcTime": {
+      "WORKSTATION5.theshire.local": {
+        "count": 558,
+        "min": -0.494,
+        "median": 1.552,
+        "max": 2.901
+      },
+      "WORKSTATION6.theshire.local": {
+        "count": 2383,
+        "min": 0.202,
+        "median": 1.134,
+        "max": 3.921
+      }
+    },
+    "EventReceivedTime - UtcTime (wall clock)": {
+      "WORKSTATION5.theshire.local": {
+        "count": 558,
+        "min": -14400.804,
+        "median": -14399.0,
+        "max": -14397.47
+      },
+      "WORKSTATION6.theshire.local": {
+        "count": 2383,
+        "min": -14400.746,
+        "median": -14399.378,
+        "max": -14396.16
+      }
+    },
+    "EventTime - UtcTime (wall clock)": {
+      "WORKSTATION5.theshire.local": {
+        "count": 558,
+        "min": -14401.804,
+        "median": -14400.276,
+        "max": -14400.0
+      },
+      "WORKSTATION6.theshire.local": {
+        "count": 2383,
+        "min": -14400.995,
+        "median": -14400.544,
+        "max": -14399.01
+      }
+    }
+  },
+  "note": "Ranges are per field; wall-clock differences do not establish timezones.",
+  "verified_sha256": "968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC"
+}

@@ -1,0 +1,80 @@
+title: CT-002 - PowerShell Started With an Encoded Command Argument
+id: 9c1a4d20-1b7e-4f3c-8a51-0d6f2e1b4402
+status: experimental
+description: >
+  Detects powershell.exe whose command line carries a base64 encoded-command
+  switch followed by a long encoded payload. The encoded argument is the
+  standard way to hide the real script text from plain command-line logging,
+  and its presence is a strong prior on deliberate concealment.
+author: Rigved Londhe
+date: 2026-09-29
+references:
+  - https://attack.mitre.org/versions/v19/techniques/T1059/001/
+  - docs/detection_backlog.md
+tags:
+  - attack.execution
+  - attack.t1059.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_image:
+    EventID: 1
+    Provider: 'Microsoft-Windows-Sysmon'
+    Image|endswith: '\powershell.exe'
+  selection_encoded:
+    CommandLine|re: '(?i)-(e|ec|enc|enco|encod|encode|encoded|encodedcommand)\s+[A-Za-z0-9+/=]{20,}'
+  condition: selection_image and selection_encoded
+falsepositives:
+  - Software deployment and configuration-management products that invoke PowerShell with
+    an encoded command, including several remote execution frameworks and legacy login
+    scripts.
+  - Administrative one-liners authored to avoid quoting problems. These are legitimate but
+    should be inventoried and allow-listed per owner.
+fields:
+  - EventID
+  - Provider
+  - Image
+  - CommandLine
+level: high
+x-attack:
+  framework: MITRE ATT&CK 19.2
+  techniques:
+    - T1059.001
+x-severity:
+  level: high
+  rationale: >
+    High. A long base64 argument is rarely produced by hand, the payload is not
+    readable in ordinary command-line logs, and in this dataset the same
+    technique is the entry point for the service, execution and discovery
+    stages of a single intrusion. The severity reflects the concealment
+    property and the downstream chain, not the switch by itself.
+x-scope:
+  covered: >
+    Sysmon event 1 process creation where the image is powershell.exe and the
+    command line contains an encoded-command switch followed by at least 20
+    base64 characters.
+  excluded: >
+    Encoded commands shorter than 20 characters, PowerShell launched through
+    4688 rather than Sysmon 1, pwsh.exe, and encoded payloads delivered as
+    script text rather than as a command-line argument.
+x-evidence:
+  expected_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1073'
+  negative_event_uids:
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1057'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:363'
+    - 'DS002:968C4B699F7239D106577B2B8E206EDFAF812F193A60E663966258AF67A56ACC:1087'
+  note: >
+    DS002:1073 is the declared match. DS002:1057 is the cmd.exe parent that
+    carries the identical encoded string but is not powershell.exe, so it must
+    not match. DS002:363 and DS002:1087 are the other process creations in the
+    dataset and neither uses an encoded argument.
+x-benign-review:
+  cases: []
+  status: pending
+  note: >
+    DS002 contains one powershell.exe process creation, so the dataset cannot
+    supply a benign comparison for this rule. Approved deployment tooling must
+    be identified in a clean environment before this rule is trusted in
+    production. Until then the technique is recorded as Partially Covered.

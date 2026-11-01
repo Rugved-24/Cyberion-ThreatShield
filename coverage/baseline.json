@@ -1,0 +1,1101 @@
+{
+  "name": "Cyberion ThreatShield - Phase 4 baseline",
+  "versions": {
+    "attack": "19",
+    "navigator": "5.3.2",
+    "layer": "4.5"
+  },
+  "domain": "enterprise-attack",
+  "description": "20 selected technique IDs assessed against DS001/DS002 using ATT&CK 19.2. All are Not Covered: no tested rules exist. Associated tactic labels are taxonomy, not observed adversary objectives. Unlisted techniques are outside this assessment. See coverage/assessment.md.",
+  "filters": {
+    "platforms": [
+      "Windows"
+    ]
+  },
+  "layout": {
+    "layout": "side",
+    "showID": true,
+    "showName": true,
+    "showAggregateScores": false,
+    "expandedSubtechniques": "annotated"
+  },
+  "sorting": 0,
+  "hideDisabled": false,
+  "selectTechniquesAcrossTactics": true,
+  "selectSubtechniquesWithParent": false,
+  "techniques": [
+    {
+      "techniqueID": "T1218.005",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS001:275 records inline VBScript in mshta.exe; DS001:398 is its GUID-linked PowerShell child. Only this inline-VBScript variant is represented; no rule has passed replay or benign testing. Next: Implement CT-001 first and retain CT-C01 for correlation development.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Candidate evidence"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "CT-001, CT-C01"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Process creation with image, command line and process/parent GUIDs."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS001:275 records inline VBScript in mshta.exe; DS001:398 is its GUID-linked PowerShell child."
+        },
+        {
+          "name": "Limitations",
+          "value": "Only this inline-VBScript variant is represented; no rule has passed replay or benign testing."
+        },
+        {
+          "name": "Next action",
+          "value": "Implement CT-001 first and retain CT-C01 for correlation development."
+        },
+        {
+          "name": "Technique object version",
+          "value": "3.0"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.676Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1218/005"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1059.001",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS001:398 launches PowerShell; DS002:1073 has an encoded-command switch; DS002:1827 retains script text. A command or script record does not establish that every embedded operation succeeded. Next: Implement bounded argument matching and test ordinary administrative invocations.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Candidate evidence"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "CT-002, CT-C01, CT-C02, CT-C03"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "PowerShell process creation and, for content inspection, script-block/module logging."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS001:398 launches PowerShell; DS002:1073 has an encoded-command switch; DS002:1827 retains script text."
+        },
+        {
+          "name": "Limitations",
+          "value": "A command or script record does not establish that every embedded operation succeeded."
+        },
+        {
+          "name": "Next action",
+          "value": "Implement bounded argument matching and test ordinary administrative invocations."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.5"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.706Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1059/001"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1569.002",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:1057 has services.exe as cmd.exe's parent; line 1073 is its PowerShell child; line 1213 registers Updater. The registration event's UTC time is unresolved. ParentImage alone does not establish malicious intent. Next: Test the Sysmon-scoped candidate; defer temporal joins to Security events.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Candidate evidence"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "CT-003, CT-C02"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Process parent/child context; service-installation records for corroboration."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:1057 has services.exe as cmd.exe's parent; line 1073 is its PowerShell child; line 1213 registers Updater."
+        },
+        {
+          "name": "Limitations",
+          "value": "The registration event's UTC time is unresolved. ParentImage alone does not establish malicious intent."
+        },
+        {
+          "name": "Next action",
+          "value": "Test the Sysmon-scoped candidate; defer temporal joins to Security events."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.3"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.723Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1569/002"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1033",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:2901 records whoami.exe as a child of the PowerShell process at line 1073. The process launch does not preserve its output; whoami also supports legitimate administration. Next: Use parent context and collect a confirmed benign comparison before claiming useful detection.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Candidate evidence"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "CT-004, CT-C03"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Process creation with image, command line and parent identity."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:2901 records whoami.exe as a child of the PowerShell process at line 1073."
+        },
+        {
+          "name": "Limitations",
+          "value": "The process launch does not preserve its output; whoami also supports legitimate administration."
+        },
+        {
+          "name": "Next action",
+          "value": "Use parent context and collect a confirmed benign comparison before claiming useful detection."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.6"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.620Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1033"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1059.003",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:1057 records cmd.exe /C starting PowerShell. CT-003 currently maps Service Execution; a Command Shell mapping has not yet been assigned. Next: Review adding this mapping to CT-003; do not manufacture a duplicate rule to raise the rule count.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Mapping review"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Command-shell process creation and command-line content."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:1057 records cmd.exe /C starting PowerShell."
+        },
+        {
+          "name": "Limitations",
+          "value": "CT-003 currently maps Service Execution; a Command Shell mapping has not yet been assigned."
+        },
+        {
+          "name": "Next action",
+          "value": "Review adding this mapping to CT-003; do not manufacture a duplicate rule to raise the rule count."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.5"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.717Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1059/003"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1059.005",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS001:275 contains inline VBScript and line 398 records the resulting PowerShell child. The existing CT-001 mapping is Mshta; broader Visual Basic execution variants remain unassessed. Next: Review whether the scoped CT-001 behavior warrants an additional mapping.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Mapping review"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Interpreter/host process command line and corroborating script or child-process evidence."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS001:275 contains inline VBScript and line 398 records the resulting PowerShell child."
+        },
+        {
+          "name": "Limitations",
+          "value": "The existing CT-001 mapping is Mshta; broader Visual Basic execution variants remain unassessed."
+        },
+        {
+          "name": "Next action",
+          "value": "Review whether the scoped CT-001 behavior warrants an additional mapping."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.5"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.722Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1059/005"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1518.001",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS001:398 contains Get-Service sysmon. The query is visible; its result and operator intent are not established by this event alone. Next: Evaluate a security-service discovery candidate and an authorized inventory comparison.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Mapping review"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Process or script text naming a security product/service."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS001:398 contains Get-Service sysmon."
+        },
+        {
+          "name": "Limitations",
+          "value": "The query is visible; its result and operator intent are not established by this event alone."
+        },
+        {
+          "name": "Next action",
+          "value": "Evaluate a security-service discovery candidate and an authorized inventory comparison."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.5"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.716Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1518/001"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1027.010",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:1073 contains -enc and a long encoded argument; line 1827 retains mixed-case and concatenated script text. Encoding also has legitimate uses. CT-002 currently maps PowerShell only. Next: Document encoding/obfuscation evidence and scope before extending CT-002's mapping.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Mapping review"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Full command/script content, including encoded arguments, with reproducible static inspection."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:1073 contains -enc and a long encoded argument; line 1827 retains mixed-case and concatenated script text."
+        },
+        {
+          "name": "Limitations",
+          "value": "Encoding also has legitimate uses. CT-002 currently maps PowerShell only."
+        },
+        {
+          "name": "Next action",
+          "value": "Document encoding/obfuscation evidence and scope before extending CT-002's mapping."
+        },
+        {
+          "name": "Technique object version",
+          "value": "2.0"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.718Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1027/010"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1685",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:1827 contains script text attempting logging-setting and AMSI-related field changes. Static content supports a proposed impairment attempt, not successful impairment. Rendering-flag meaning remains unresolved. Next: Review the script statically and select the appropriate v19.2 parent/sub-technique scope before adding a rule.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Mapping review"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Script content or security-control changes with enough context to identify the attempted impairment."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:1827 contains script text attempting logging-setting and AMSI-related field changes."
+        },
+        {
+          "name": "Limitations",
+          "value": "Static content supports a proposed impairment attempt, not successful impairment. Rendering-flag meaning remains unresolved."
+        },
+        {
+          "name": "Next action",
+          "value": "Review the script statically and select the appropriate v19.2 parent/sub-technique scope before adding a rule."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.0"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.712Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1685"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1021.002",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:728-730 are SYSVOL policy-file share events; lines 1364-1370 contain RPC-related connection leads. Neither the PsExec scenario label nor SYSVOL access proves an attacker SMB/admin-share sequence. Next: Acquire or identify a coherent admin-share scenario and validate its identity/time joins.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Needs corroboration"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "SMB/admin-share activity linked to authenticated sessions and remote execution."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:728-730 are SYSVOL policy-file share events; lines 1364-1370 contain RPC-related connection leads."
+        },
+        {
+          "name": "Limitations",
+          "value": "Neither the PsExec scenario label nor SYSVOL access proves an attacker SMB/admin-share sequence."
+        },
+        {
+          "name": "Next action",
+          "value": "Acquire or identify a coherent admin-share scenario and validate its identity/time joins."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.3"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.632Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1021/002"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1047",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:2451, 4216 and 4219 are WMI provider-start events; line 2469 launches WmiPrvSE.exe. Provider startup and the executable name do not establish adversary WMI execution. Next: Find operation/child-process evidence or acquire a labeled WMI execution recording.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Needs corroboration"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "WMI operation context and attributable process execution or remote-management activity."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:2451, 4216 and 4219 are WMI provider-start events; line 2469 launches WmiPrvSE.exe."
+        },
+        {
+          "name": "Limitations",
+          "value": "Provider startup and the executable name do not establish adversary WMI execution."
+        },
+        {
+          "name": "Next action",
+          "value": "Find operation/child-process evidence or acquire a labeled WMI execution recording."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.6"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.619Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1047"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1053.005",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:359 launches an Office-named scheduled task; line 363 records OfficeC2RClient.exe. These records do not establish attacker task creation or persistence and are not assigned a benign label. Next: Collect task-definition/change evidence and documented legitimate task comparisons.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Needs corroboration"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Task registration/modification or task definition plus attributable action execution."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:359 launches an Office-named scheduled task; line 363 records OfficeC2RClient.exe."
+        },
+        {
+          "name": "Limitations",
+          "value": "These records do not establish attacker task creation or persistence and are not assigned a benign label."
+        },
+        {
+          "name": "Next action",
+          "value": "Collect task-definition/change evidence and documented legitimate task comparisons."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.8"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.618Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1053/005"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1543.003",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:1213 installs Updater with a PowerShell-containing service command; process leads occur at 1057 and 1073. Service creation is observed; persistence or privilege-escalation objectives are unproven. Security UTC is unresolved. Next: Assess service-creation scope separately from CT-003's execution signal and validate legitimate installers.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Needs corroboration"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Service creation/change, binary path, account and start configuration, with execution/context."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:1213 installs Updater with a PowerShell-containing service command; process leads occur at 1057 and 1073."
+        },
+        {
+          "name": "Limitations",
+          "value": "Service creation is observed; persistence or privilege-escalation objectives are unproven. Security UTC is unresolved."
+        },
+        {
+          "name": "Next action",
+          "value": "Assess service-creation scope separately from CT-003's execution signal and validate legitimate installers."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.6"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.623Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1543/003"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1547.001",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. Sysmon registry/file telemetry exists, but the reviewed registry events have no CurrentVersion\\Run target. Startup-folder persistence has not been established; these short captures cannot establish absence generally. Next: Acquire an attributed persistence recording with both modification and resulting execution.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Evidence gap"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Run-key writes or Startup-folder changes, plus later execution and a documented positive case."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "Sysmon registry/file telemetry exists, but the reviewed registry events have no CurrentVersion\\Run target."
+        },
+        {
+          "name": "Limitations",
+          "value": "Startup-folder persistence has not been established; these short captures cannot establish absence generally."
+        },
+        {
+          "name": "Next action",
+          "value": "Acquire an attributed persistence recording with both modification and resulting execution."
+        },
+        {
+          "name": "Technique object version",
+          "value": "2.1"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.706Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1547/001"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1003.001",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:2466, 2467, 3108, 4276, 4278, 4332 and 4333 are LSASS accesses from svchost.exe. Access alone does not prove credential dumping; process names alone do not establish legitimacy either. Next: Review source provenance, access details and surrounding events; obtain confirmed positive/benign examples.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Needs corroboration"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "LSASS process-access details with source identity, access mask/call trace and corroborating activity."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:2466, 2467, 3108, 4276, 4278, 4332 and 4333 are LSASS accesses from svchost.exe."
+        },
+        {
+          "name": "Limitations",
+          "value": "Access alone does not prove credential dumping; process names alone do not establish legitimacy either."
+        },
+        {
+          "name": "Next action",
+          "value": "Review source provenance, access details and surrounding events; obtain confirmed positive/benign examples."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.5"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.637Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1003/001"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1110.003",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. Neither capture contains Security-Auditing event 4625; no labeled spraying sequence is established. Successful logons and short capture duration cannot establish password spraying or its absence. Next: Acquire an authentication-failure dataset with controlled spraying and legitimate failed-login comparisons.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Evidence gap"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "A sufficient-duration authentication series containing failures across users and source context."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "Neither capture contains Security-Auditing event 4625; no labeled spraying sequence is established."
+        },
+        {
+          "name": "Limitations",
+          "value": "Successful logons and short capture duration cannot establish password spraying or its absence."
+        },
+        {
+          "name": "Next action",
+          "value": "Acquire an authentication-failure dataset with controlled spraying and legitimate failed-login comparisons."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.8"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2025-10-24T17:48:53.996Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1110/003"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1078",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:1209 records a network logon as pgustavo; line 1213 shares its host and logon ID. Account use is recorded; credential compromise and applicable adversary objectives need corroboration. Next: Establish the account's authorized use and resolve temporal semantics before wider session correlation.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Needs corroboration"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Authentication records plus account ownership, authorization and relevant activity context."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:1209 records a network logon as pgustavo; line 1213 shares its host and logon ID."
+        },
+        {
+          "name": "Limitations",
+          "value": "Account use is recorded; credential compromise and applicable adversary objectives need corroboration."
+        },
+        {
+          "name": "Next action",
+          "value": "Establish the account's authorized use and resolve temporal semantics before wider session correlation."
+        },
+        {
+          "name": "Technique object version",
+          "value": "3.0"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.707Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1078"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1105",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:1827 contains retrieval-related script content; line 2513 records PowerShell connecting to 10.10.10.5:80. A script and connection do not demonstrate a completed tool transfer or identify the returned content. Next: Seek corroborating transfer artifacts or a dataset with request/response and resulting content evidence.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Needs corroboration"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Transfer command plus network, response, file or memory evidence supporting transferred content."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:1827 contains retrieval-related script content; line 2513 records PowerShell connecting to 10.10.10.5:80."
+        },
+        {
+          "name": "Limitations",
+          "value": "A script and connection do not demonstrate a completed tool transfer or identify the returned content."
+        },
+        {
+          "name": "Next action",
+          "value": "Seek corroborating transfer artifacts or a dataset with request/response and resulting content evidence."
+        },
+        {
+          "name": "Technique object version",
+          "value": "2.6"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.723Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1105"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1071.001",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. DS002:2513 is a connection to 10.10.10.5:80 from the process GUID created at 1073; script context is at 1827. Port 80 is not proof of HTTP or C2. A single connection does not establish beaconing. Script UTC is unresolved. Next: Reserve for HUNT-002; assess C2 versus one-off retrieval using static script review and process/network evidence.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Needs corroboration"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Process-linked connections and web-protocol/session content or context supporting a C2 assessment."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "DS002:2513 is a connection to 10.10.10.5:80 from the process GUID created at 1073; script context is at 1827."
+        },
+        {
+          "name": "Limitations",
+          "value": "Port 80 is not proof of HTTP or C2. A single connection does not establish beaconing. Script UTC is unresolved."
+        },
+        {
+          "name": "Next action",
+          "value": "Reserve for HUNT-002; assess C2 versus one-off retrieval using static script review and process/network evidence."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.5"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.722Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1071/001"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1486",
+      "enabled": true,
+      "score": 0,
+      "color": "#f4cccc",
+      "comment": "Not Covered. File-related Sysmon events exist, but no confirmed encryption-for-impact sequence has been identified. Generic file operations and this project's name do not establish ransomware activity. Next: Acquire a documented safe-emulation recording with known file effects if this gap is selected for implementation.",
+      "metadata": [
+        {
+          "name": "Coverage status",
+          "value": "Not Covered"
+        },
+        {
+          "name": "Evidence state",
+          "value": "Evidence gap"
+        },
+        {
+          "name": "Planned rule IDs",
+          "value": "None assigned"
+        },
+        {
+          "name": "Required telemetry",
+          "value": "Labeled file-change effects and process context sufficient to demonstrate encryption for impact."
+        },
+        {
+          "name": "Available telemetry / evidence",
+          "value": "File-related Sysmon events exist, but no confirmed encryption-for-impact sequence has been identified."
+        },
+        {
+          "name": "Limitations",
+          "value": "Generic file operations and this project's name do not establish ransomware activity."
+        },
+        {
+          "name": "Next action",
+          "value": "Acquire a documented safe-emulation recording with known file effects if this gap is selected for implementation."
+        },
+        {
+          "name": "Technique object version",
+          "value": "1.5"
+        },
+        {
+          "name": "Technique modified",
+          "value": "2026-05-12T15:12:00.709Z"
+        }
+      ],
+      "links": [
+        {
+          "label": "MITRE ATT&CK v19",
+          "url": "https://attack.mitre.org/versions/v19/techniques/T1486"
+        }
+      ]
+    }
+  ],
+  "gradient": {
+    "colors": [
+      "#f4cccc",
+      "#fff2cc",
+      "#d9ead3"
+    ],
+    "minValue": 0,
+    "maxValue": 2
+  },
+  "legendItems": [
+    {
+      "label": "Not Covered (assessed)",
+      "color": "#f4cccc"
+    },
+    {
+      "label": "Partially Covered",
+      "color": "#fff2cc"
+    },
+    {
+      "label": "Covered",
+      "color": "#d9ead3"
+    }
+  ],
+  "metadata": [
+    {
+      "name": "ATT&CK release",
+      "value": "19.2"
+    },
+    {
+      "name": "Assessment date (UTC)",
+      "value": "2026-09-18"
+    },
+    {
+      "name": "Pinned STIX URL",
+      "value": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/6cda5ad8462c79e14fbb872f4e09059b18e0cfc4/enterprise-attack/enterprise-attack-19.2.json"
+    },
+    {
+      "name": "STIX SHA-256",
+      "value": "DC1639CAA5501D720E280CF1CBD8FBE009884A0C9B3E6E9ED9D0C25166C3D8F4"
+    },
+    {
+      "name": "Distinct assessed technique IDs",
+      "value": "20"
+    },
+    {
+      "name": "Associated tactics in assessment",
+      "value": "11"
+    },
+    {
+      "name": "HUNT-002 reserved gap",
+      "value": "T1071.001; no existing network/C2 rule; retain this baseline before the hunt"
+    }
+  ]
+}

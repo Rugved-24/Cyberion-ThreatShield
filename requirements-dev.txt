@@ -1,0 +1,45 @@
+# Quality-assurance, reporting and environment-inspection tooling.
+#
+# Separated from requirements.txt because these are the scripts the PRD's
+# quality standard and the engagement instruction ask for, not the libraries the
+# analysis itself depends on. The detection pipeline in requirements.txt is the
+# minimum needed to replay rules; everything below exists to check the work.
+#
+# Every package here is already installed in the project environment, because
+# they are part of the same pinned Windows freeze recorded in requirements.txt.
+# This file is a declaration of what the tooling needs, not an instruction to
+# install anything new.
+#
+#   python -m pip install -r requirements-dev.txt
+
+# YAML parsing and rule loading. Also a runtime dependency of the analysis; listed
+# here because the compliance and requirement tooling is its primary consumer.
+PyYAML==6.0.3
+
+# Rule syntax validation. prd_compliance.py shells out to sigma check and fails the
+# audit if the executable is absent.
+sigma-cli==3.1.0
+
+# Data loading for the replay harness, the compliance audit and the notebooks.
+pandas==3.0.5
+numpy==2.5.3
+
+# Documented analysis notebooks. The kernel is registered under the name cyberion
+# and notebooks/01_data_familiarization.ipynb refuses to run on any other.
+jupyterlab==4.6.3
+ipykernel==7.3.0
+nbformat==5.11.1
+nbconvert==7.17.1
+
+# Note on absent dependencies.
+#
+# python-docx and python-pptx are deliberately NOT required. The executive report
+# and the presentation deck are produced as Office Open XML by the local writers in
+# scripts/ rather than by a third-party library, so that a deliverable cannot be
+# blocked by a missing package and so that the exact output is auditable. Adding
+# those libraries would be installing packages for appearance, which the
+# engagement instruction prohibits.
+#
+# No SIEM client, no Elastic or OpenSearch library, and no plotting package is
+# required by any deliverable. The coverage matrix is a generated Markdown table
+# and an ATT&CK Navigator layer, not a chart.

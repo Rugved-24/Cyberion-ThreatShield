@@ -1,0 +1,103 @@
+CYBERION-THREATSHIELD COVERAGE GAP DIAGNOSTICS
+Generated: 2026-10-21 16:29:57
+
+=== REQUIRED FILES ===
+ATT&CK coverage builder: FOUND
+Detection test runner: FOUND
+Final status generator: FOUND
+Coverage baseline: FOUND
+Generated coverage: FOUND
+Final report: FOUND
+Detection directory: FOUND
+Hunt definitions: FOUND
+
+=== UNCOVERED AND PARTIALLY COVERED TECHNIQUES ===
+
+=== HUNT-002 REFERENCES ===
+E:\VS Code Projects\Cyberion-ThreatShield\PROGRESS.md:38: - HUNT-002 pre-hunt commit: a85ce34.
+E:\VS Code Projects\Cyberion-ThreatShield\PROGRESS.md:86: - HUNT-002, T1071.001, pre-hunt commit a85ce34: **inconclusive**. One connection to
+E:\VS Code Projects\Cyberion-ThreatShield\PROJECT_REQUIREMENTS.csv:14: R-4.4-01,4.4 Threat Hunting,countable,1,At least one hunt investigates an ATT&CK technique not already covered by an existing detection rule,hunts/HUNT-002.md,hunt_targets_uncovered_technique,False
+E:\VS Code Projects\Cyberion-ThreatShield\PROJECT_REQUIREMENTS.json:132: "artefacts": "hunts/HUNT-002.md",
+E:\VS Code Projects\Cyberion-ThreatShield\PROJECT_REQUIREMENTS.md:46: | R-4.4-01 | 4.4 Threat Hunting | At least one hunt investigates an ATT&CK technique not already covered by an existing detection rule | `hunts/HUNT-002.md` | `hunt_targets_uncovered_technique` |
+E:\VS Code Projects\Cyberion-ThreatShield\README.md:45: hunts/          HUNT-001 and HUNT-002, hypothesis first, negative results recorded
+E:\VS Code Projects\Cyberion-ThreatShield\coverage\assessment.md:192: - Next action: Reserve for HUNT-002; assess C2 versus one-off retrieval using static script review and process/network evidence.
+E:\VS Code Projects\Cyberion-ThreatShield\coverage\assessment.md:215: ## Reserved HUNT-002 gap
+E:\VS Code Projects\Cyberion-ThreatShield\coverage\assessment.md:222: - **Before the hunt:** commit this baseline and record that commit in `hunts/HUNT-002.md`. No commit hash is claimed here. If a validated rule covers the target before the hunt, select and document another gap first.
+E:\VS Code Projects\Cyberion-ThreatShield\coverage\baseline.json:950: "comment": "Not Covered. DS002:2513 is a connection to 10.10.10.5:80 from the process GUID created at 1073; script context is at 1827. Port 80 is not proof of HTTP or C2. A single connection does not establish beaconing. Script UTC is unresolved. Next: Reserve for HUNT-002; assess C2 versus one-off retrieval using static script review and process/network evidence.",
+E:\VS Code Projects\Cyberion-ThreatShield\coverage\baseline.json:978: "value": "Reserve for HUNT-002; assess C2 versus one-off retrieval using static script review and process/network evidence."
+E:\VS Code Projects\Cyberion-ThreatShield\coverage\baseline.json:1097: "name": "HUNT-002 reserved gap",
+E:\VS Code Projects\Cyberion-ThreatShield\coverage\layer-v2.json:735: "comment": "Not Covered. Deliberately left without a rule. T1071.001 is the reserved gap for HUNT-002, which must run before any rule is written so that the hypothesis is recorded independently of the detection. The evidence is DS002:1073 creating the process, DS002:2513 connecting it to 10.10.10.5:80, and DS002:1827 for the script. See hunts/HUNT-002.md.",
+E:\VS Code Projects\Cyberion-ThreatShield\coverage\matrix-v2.md:70: Deliberately left without a rule. T1071.001 is the reserved gap for HUNT-002, which must run before any rule is written so that the hypothesis is recorded independently of the detection. The evidence is DS002:1073 creating the process, DS002:2513 connecting it to 10.10.10.5:80, and DS002:1827 for the script. See hunts/HUNT-002.md.
+E:\VS Code Projects\Cyberion-ThreatShield\dashboard\app.py:342: - `HUNT-002` remains inconclusive.
+E:\VS Code Projects\Cyberion-ThreatShield\docs\data_dictionary.md:82: | `QueryName` | QueryName | Sysmon 22 | HUNT-002 | `localhost` and a host name in this data; no real domain is resolved |
+E:\VS Code Projects\Cyberion-ThreatShield\docs\data_dictionary.md:92: | `DestinationPort` | DestinationPort | Sysmon 3 | HUNT-002 | Integer in the raw export |
+E:\VS Code Projects\Cyberion-ThreatShield\docs\detection_backlog.md:154: | T1071.001 Web Protocols | Reserved for HUNT-002 so the hypothesis is recorded independently of any rule. HUNT-002 concluded inconclusive; see `hunts/HUNT-002.md`. |
+E:\VS Code Projects\Cyberion-ThreatShield\docs\methodology.md:195: HUNT-002's pre-hunt commit is `a85ce34`.
+E:\VS Code Projects\Cyberion-ThreatShield\docs\prd-compliance-report.md:158: | Threat Hunting Method | 15% | Strong, and notable for its negative results. | Two hunts, hypothesis-first with the pre-hunt commit recorded so a conclusion could not be reverse-engineered from an existing rule. One concluded inconclusive and one partially supported; neither was forced positive. Searches that returned nothing are recorded so a later analyst does not repeat them. HUNT-002's port-80 ratio is a reusable negative result rather than a discarded one. |
+E:\VS Code Projects\Cyberion-ThreatShield\docs\project-structure.md:34: | `04_Threat_Hunts/TH-002` | `hunts/HUNT-002.md` | |
+E:\VS Code Projects\Cyberion-ThreatShield\docs\project-structure.md:58: | `TH-001` | `HUNT-001` | 2 hunts | `HUNT-002` T1071.001 web protocols |
+E:\VS Code Projects\Cyberion-ThreatShield\docs\purple-team-plan.md:47: | Beacon simulation to a lab sink | T1071.001 | Closes the gap left inconclusive by HUNT-002 | Point at a lab sink, never a real host |
+E:\VS Code Projects\Cyberion-ThreatShield\hunts\HUNT-001.md:7: had produced a detection. T1071.001 in HUNT-002 is the qualifying hunt against a
+E:\VS Code Projects\Cyberion-ThreatShield\hunts\HUNT-002.md:1: # HUNT-002: Web-protocol command and control from the encoded PowerShell process
+E:\VS Code Projects\Cyberion-ThreatShield\incidents\INC-001.md:101: - **Whether the command-and-control channel is established.** HUNT-002 concluded
+E:\VS Code Projects\Cyberion-ThreatShield\ioc\watchlist.csv:2: "10.10.10.5","ipv4","10.10.10.5","2020-09-20T16:17:01.152Z","2020-09-20T16:17:01.152Z","DS002:2513;DS002:2367;DS002:1827","none","high","Watchlist and retrospective network search. Not deployed as a rule: a single observed connection in a 2m14s window cannot support a C2 rule. Feeds HUNT-002.","RFC 1918 private address inside a lab. Attacker-controlled for this engagement, but the address is not globally attributable and must not be published as real-world C2."
+E:\VS Code Projects\Cyberion-ThreatShield\ioc\watchlist.csv:3: "10.10.10.5:80","network_endpoint","10.10.10.5:80","2020-09-20T16:17:01.152Z","2020-09-20T16:17:01.152Z","DS002:2513;DS002:2367","none","high","Proxy or firewall retrospective search for the flow. Paired with the process GUID, not the port alone.","Port 80 alone is a poor discriminator here: 42 of 43 port-80 flows in DS002 are Azure platform traffic. See HUNT-002 section 3.3."
+E:\VS Code Projects\Cyberion-ThreatShield\ioc\watchlist.csv:20: "168.63.129.16","ipv4","168.63.129.16",,,"DS002:43 lines","none","benign","DO NOT BLOCK. Azure platform wire server, contacted by the guest agent 39 times on port 80.","Recorded because a naive port-80 rule matches it. This is the negative result that shaped HUNT-002."
+E:\VS Code Projects\Cyberion-ThreatShield\playbooks\PB-04-command-and-control-egress.md:34: `hunts/HUNT-002.md`.
+E:\VS Code Projects\Cyberion-ThreatShield\playbooks\PB-04-command-and-control-egress.md:61: port. This is the HUNT-002 case, and the correct outcome is usually a recorded
+E:\VS Code Projects\Cyberion-ThreatShield\playbooks\PB-04-command-and-control-egress.md:104: This is the HUNT-002 outcome for T1105.
+E:\VS Code Projects\Cyberion-ThreatShield\playbooks\PB-04-command-and-control-egress.md:162: 4. Update `hunts/HUNT-002.md`'s conclusion if new evidence arrives, and record the
+E:\VS Code Projects\Cyberion-ThreatShield\playbooks\PB-04-command-and-control-egress.md:169: | 1.0 | 2026-09-29 | Initial version, derived from `hunts/HUNT-002.md` and CT-009 | Detection Engineering |
+E:\VS Code Projects\Cyberion-ThreatShield\reports\final-status-report.md:65: | T1071.001 | Reserved for HUNT-002, which concluded inconclusive. One connection in a 2m14s window; 42 of 43 port-80 flows are benign platform traffic. |
+E:\VS Code Projects\Cyberion-ThreatShield\reports\final-status-report.md:76: | HUNT-002 | T1071.001 Web Protocols | **Inconclusive** |
+E:\VS Code Projects\Cyberion-ThreatShield\reports\final-status-report.md:78: HUNT-002 satisfies the PRD requirement for a hunt against a technique with no existing rule. Neither hunt was forced positive; one is inconclusive and one is partially supported.
+E:\VS Code Projects\Cyberion-ThreatShield\reports\final-status-report.md:138: | 1+ hunt on an uncovered technique | Met, HUNT-002 on T1071.001 |
+E:\VS Code Projects\Cyberion-ThreatShield\reports\final-technical-report.md:212: | HUNT-002 | T1071.001 Web Protocols | **Inconclusive** | One connection to 10.10.10.5 in a 2m14s resolved-time base; destination is RFC 1918; no response content. Pre-hunt commit `a85ce34` recorded before analysis. |
+E:\VS Code Projects\Cyberion-ThreatShield\reports\final-technical-report.md:215: HUNT-002 satisfies the PRD requirement that at least one hunt target a technique not
+E:\VS Code Projects\Cyberion-ThreatShield\reports\final-technical-report.md:219: Neither hunt was forced positive. The most valuable output of HUNT-002 is
+E:\VS Code Projects\Cyberion-ThreatShield\reports\final-technical-report.md:366: - **A negative result is a deliverable.** HUNT-002's port-80 ratio prevented an
+E:\VS Code Projects\Cyberion-ThreatShield\scripts\build_coverage.py:118: "Deliberately left without a rule. T1071.001 is the reserved gap for HUNT-002, "
+E:\VS Code Projects\Cyberion-ThreatShield\scripts\build_coverage.py:122: "hunts/HUNT-002.md."
+E:\VS Code Projects\Cyberion-ThreatShield\scripts\build_notebooks.py:285: - The recorded hunt reports `hunts/HUNT-001.md` and `hunts/HUNT-002.md`.
+E:\VS Code Projects\Cyberion-ThreatShield\scripts\build_notebooks.py:288: HUNT-002 tests whether the outbound web connection is command and control. The
+E:\VS Code Projects\Cyberion-ThreatShield\scripts\build_notebooks.py:308: # HUNT-002, T1071.001: how many connections does the suspect process make, and
+E:\VS Code Projects\Cyberion-ThreatShield\scripts\build_notebooks.py:353: HUNT-002 stands at Inconclusive, and the queries above are why. The suspect
+E:\VS Code Projects\Cyberion-ThreatShield\scripts\final_status.py:171: "T1071.001": "Reserved for HUNT-002, which concluded inconclusive. One connection in a 2m14s window; 42 of 43 port-80 flows are benign platform traffic.",
+E:\VS Code Projects\Cyberion-ThreatShield\scripts\final_status.py:190: lines += ["", "HUNT-002 satisfies the PRD requirement for a hunt against a technique with "
+E:\VS Code Projects\Cyberion-ThreatShield\scripts\final_status.py:250: "| 1+ hunt on an uncovered technique | Met, HUNT-002 on T1071.001 |",
+E:\VS Code Projects\Cyberion-ThreatShield\scripts\requirements_matrix.py:53: "does not repeat them. HUNT-002's port-80 ratio is a reusable negative "
+E:\VS Code Projects\Cyberion-ThreatShield\scripts\requirements_matrix.py:160: artefacts=["hunts/HUNT-002.md"],
+
+=== DETECTION AND TEST FILES ===
+Detection files found: 31
+detections\test-results.csv
+detections\tuning-results.csv
+detections\converted\auth_network_logon_interactive_account.kql
+detections\converted\auth_network_logon_interactive_account.spl
+detections\converted\file_share_admin_share_remote_service_access.kql
+detections\converted\file_share_admin_share_remote_service_access.spl
+detections\converted\proc_create_cmd_background_powershell_launcher.kql
+detections\converted\proc_create_cmd_background_powershell_launcher.spl
+detections\converted\proc_create_cmd_from_services_exe.kql
+detections\converted\proc_create_cmd_from_services_exe.spl
+detections\converted\proc_create_mshta_inline_vbscript.kql
+detections\converted\proc_create_mshta_inline_vbscript.spl
+detections\converted\proc_create_powershell_encoded_command.kql
+detections\converted\proc_create_powershell_encoded_command.spl
+detections\converted\proc_create_powershell_security_service_discovery.kql
+detections\converted\proc_create_powershell_security_service_discovery.spl
+detections\converted\proc_create_whoami_from_powershell.kql
+detections\converted\proc_create_whoami_from_powershell.spl
+detections\converted\ps_script_block_amsi_bypass_flag.kql
+detections\converted\ps_script_block_amsi_bypass_flag.spl
+detections\converted\ps_script_block_disable_scriptblock_logging.kql
+detections\converted\ps_script_block_disable_scriptblock_logging.spl
+detections\converted\ps_script_block_encoded_payload_decode_exec.kql
+detections\converted\ps_script_block_encoded_payload_decode_exec.spl
+detections\converted\ps_script_block_webclient_default_credentials.kql
+detections\converted\ps_script_block_webclient_default_credentials.spl
+detections\converted\README.md
+detections\converted\service_create_powershell_imagepath.kql
+detections\converted\service_create_powershell_imagepath.spl
+detections\converted\sysmon_process_access_lsass_memory.kql
+detections\converted\sysmon_process_access_lsass_memory.spl
