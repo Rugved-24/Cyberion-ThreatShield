@@ -41,4 +41,23 @@ jobs:
           # pySigma requires diskcache 5.6.3; PYSEC-2026-2447 has no fixed release.
           # The residual local-cache risk is documented in SECURITY.md (R1).
           python -m pip_audit --ignore-vuln PYSEC-2026-2447 -r requirements.lock.txt
+          python -m pip_audit -r requirements-dashboard.lock.txt
           python -m bandit -q -ll -r scripts dashboard
+
+  dashboard-smoke:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dashboard.lock.txt
+      - name: Install hash-locked dashboard environment
+        run: python -m pip install --require-hashes -r requirements-dashboard.lock.txt
+      - name: Render dashboard with Streamlit AppTest
+        run: >-
+          python -c "from streamlit.testing.v1 import AppTest;
+          app=AppTest.from_file('dashboard/app.py').run(timeout=30);
+          assert not app.exception, app.exception"

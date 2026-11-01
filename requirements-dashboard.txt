@@ -1,3 +1,5 @@
 # Optional dashboard dependencies; install separately from the core project requirements.
 streamlit>=1.40,<2
 plotly>=5.24,<7
+# Security floor: Pillow 12.3.0 is affected by the 2026 image-parser advisories.
+pillow>=13,<14
