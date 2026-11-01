@@ -1,0 +1,38 @@
+name: Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.lock.txt
+      - name: Install hash-locked dependencies
+        run: python -m pip install --require-hashes -r requirements.lock.txt
+      - name: Acquire and verify public telemetry
+        run: |
+          python scripts/bootstrap_datasets.py
+          python scripts/inventory_dataset.py DS001 cmd_mshta_vbscript_execute_psh_2020-10-2202580804.json
+          python scripts/inventory_dataset.py DS002 empire_psexec_dcerpc_tcp_svcctl_2020-09-20121608.json
+      - name: Build normalized evidence
+        run: |
+          python scripts/check_capture.py
+          python scripts/normalize_dataset.py DS001 DS002
+      - name: Validate rules, requirements and security controls
+        run: |
+          python scripts/test_all.py
+          python scripts/prd_compliance.py
+          python scripts/security_review.py
