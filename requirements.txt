@@ -89,7 +89,7 @@ soupsieve==2.9.2
 stack-data==0.6.3
 terminado==0.18.1
 tinycss2==1.5.1
-tornado==6.6
+tornado==6.6.1
 traitlets==5.16.1
 types-PyYAML==6.0.12.20260906
 typing_extensions==4.16.0
